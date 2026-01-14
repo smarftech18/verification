@@ -7,5 +7,12 @@
   "devDependencies": {
     "@sap/cds-dk": "^9.4.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
+    "@sapui5/ts-types": "^1.92.2",
+    "eslint": "^7.32.0"
+  },
+  "sapux": [
+    "app/verification_ui"
+  ]
 }
