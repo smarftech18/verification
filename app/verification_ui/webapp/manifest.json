@@ -98,28 +98,28 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "MachinesList",
-          "target": "MachinesList"
+          "name": "MachineEditList",
+          "target": "MachineEditList"
         },
         {
-          "pattern": "Machines({key}):?query:",
-          "name": "MachinesObjectPage",
-          "target": "MachinesObjectPage"
+          "pattern": "MachineEdit({key}):?query:",
+          "name": "MachineEditObjectPage",
+          "target": "MachineEditObjectPage"
         }
       ],
       "targets": {
-        "MachinesList": {
+        "MachineEditList": {
           "type": "Component",
-          "id": "MachinesList",
+          "id": "MachineEditList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/Machines",
+              "contextPath": "/MachineEdit",
               "variantManagement": "Page",
               "navigation": {
                 "Machines": {
                   "detail": {
-                    "route": "MachinesObjectPage"
+                    "route": "MachineEditObjectPage"
                   }
                 }
               },
@@ -133,14 +133,14 @@
             }
           }
         },
-        "MachinesObjectPage": {
+        "MachineEditObjectPage": {
           "type": "Component",
-          "id": "MachinesObjectPage",
+          "id": "MachineEditObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Machines"
+              "contextPath": "/MachineEdit"
             }
           }
         }
