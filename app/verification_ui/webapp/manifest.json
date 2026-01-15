@@ -117,7 +117,7 @@
               "contextPath": "/MachineEdit",
               "variantManagement": "Page",
               "navigation": {
-                "Machines": {
+                "MachineEdit": {
                   "detail": {
                     "route": "MachineEditObjectPage"
                   }
@@ -139,7 +139,6 @@
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
-              "editableHeaderContent": false,
               "contextPath": "/MachineEdit"
             }
           }

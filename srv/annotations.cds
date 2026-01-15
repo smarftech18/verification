@@ -22,3 +22,8 @@ annotate svc.MachineEdit with @(
     ]
   }
 );
+
+annotate MachineService.MachineEdit with {
+  machineNo @Common.FieldControl : #Mandatory; // もしくは #Editable は無いので Mandatoryが効く
+};
+

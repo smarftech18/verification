@@ -1,33 +1,29 @@
-package customer.verification;
+// package customer.verification;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Qualifier;
+// import org.springframework.stereotype.Component;
 
-import com.sap.cds.ql.Select;
-import com.sap.cds.services.cds.CdsReadEventContext;
-import com.sap.cds.services.cds.RemoteService;
-import com.sap.cds.services.handler.EventHandler;
-import com.sap.cds.services.handler.annotations.On;
-import com.sap.cds.services.handler.annotations.ServiceName;
+// import com.sap.cds.ql.Select;
+// import com.sap.cds.services.cds.CdsReadEventContext;
+// import com.sap.cds.services.cds.CdsService;
+// import com.sap.cds.services.handler.EventHandler;
+// import com.sap.cds.services.handler.annotations.On;
+// import com.sap.cds.services.handler.annotations.ServiceName;
 
-@Component
-@ServiceName("MachineService")
-public class MachineEditReadHandler implements EventHandler {
+// @Component
+// @ServiceName("MachineService")
+// public class MachineEditReadHandler implements EventHandler {
 
-  @Autowired
-  RemoteService s4Read; // requires名に合わせる: S4_READ_SERVICE
+//   @Autowired
+//   @Qualifier("S4_READ_SERVICE")
+//   CdsService s4Read;
 
-  @On(event = CdsService.EVENT_READ, entity = "MachineService.MachineEdit")
-  public void onReadMachineEdit(CdsReadEventContext ctx) {
+//   @On(event = "READ")
+//   public void onRead(CdsReadEventContext ctx) {
+//     if (!"MachineEdit".equals(ctx.getTarget().getName())) return;
 
-    // 1) 元リクエストの CQN を読む
-    // 2) S4_READ_SERVICE.MachineView に投げ替える
-    //    （フィルタ等も可能なら移植）
-    var result = s4Read.run(
-      Select.from("S4_READ_SERVICE.MachineView")
-    );
-
-    ctx.setResult(result);
-  }
-}
-
+//     var result = s4Read.run(Select.from("S4_READ_SERVICE.MachineView"));
+//     ctx.setResult(result);
+//   }
+// }
