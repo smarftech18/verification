@@ -1,5 +1,5 @@
-using MachineService as service from '../../srv/service';
-annotate service.Machines with @(
+using SerialService as service from '../../srv/service';
+annotate service.SerialData with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
         Data : [

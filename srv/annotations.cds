@@ -1,6 +1,6 @@
-using MachineService as svc from './service';
+using SerialService as svc from './service';
 
-annotate svc.MachineEdit with @(
+annotate svc.SerialData with @(
   UI.SelectionFields: [ s4Key, plant, status, reflectionDate ],
   UI.LineItem: [
     { Value: s4Key },
@@ -9,9 +9,9 @@ annotate svc.MachineEdit with @(
     { Value: machineNo },
     { Value: reflectionDate }
   ],
-  UI.Facets: [
-    { $Type: 'UI.ReferenceFacet', Label: 'General Information', Target: '@UI.FieldGroup#Main' }
-  ],
+  // UI.Facets: [
+  //   { $Type: 'UI.ReferenceFacet', Label: 'General Information', Target: '@UI.FieldGroup#Main' }
+  // ],
   UI.FieldGroup #Main: {
     Data: [
       { Value: s4Key,          @Common.FieldControl: #ReadOnly },

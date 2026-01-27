@@ -1,0 +1,48 @@
+@server=http://localhost:8080
+@username=authenticated
+@password=
+
+
+### MachineView
+# @name MachineView_GET
+GET {{server}}/odata/v4/S4_READ_SERVICE/MachineView
+Authorization: Basic {{username}}:{{password}}
+
+
+### MachineView
+# @name MachineView_POST
+POST {{server}}/odata/v4/S4_READ_SERVICE/MachineView
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "s4Key": "MachineView-18188879",
+  "plant": "8879",
+  "status": "s-18188879",
+  "serialNo": "serialNo-18188879",
+  "dataType": "79",
+  "registrationDate": "2002-05-01"
+}
+
+
+### MachineView
+# @name MachineView_PATCH
+PATCH {{server}}/odata/v4/S4_READ_SERVICE/MachineView/MachineView-18188879
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "s4Key": "MachineView-18188879",
+  "plant": "8879",
+  "status": "s-18188879",
+  "serialNo": "serialNo-18188879",
+  "dataType": "79",
+  "registrationDate": "2002-05-01"
+}
+
+
+### MachineView
+# @name MachineView_DELETE
+DELETE {{server}}/odata/v4/S4_READ_SERVICE/MachineView/MachineView-18188879
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
