@@ -7,10 +7,10 @@ service SerialService {
 
   // MARK: アクション・ファンクション
 
-  // FunctionはGET。複数条件は “分解して” collection params で受ける
-  function searchSerialNo(serialNo: array of String(30),
-                          dataType: array of String(2),
-                          registrationDate: array of Date) 
+  // FunctionはOutputValue。複数条件は “分解して” collection params で受ける
+  function searchSerialNo(serialNo: many String(30),
+                          dataType: many String(2),
+                          registrationDate: many Date) 
                           returns many OutputValue;
 }
 
@@ -23,7 +23,7 @@ type InputValue {
 
 
 type OutputValue {
-  serialNo         : array of String(30);
-  dataType         : array of String(2);
-  registrationDate : array of Date;
+  serialNo         : String(30);
+  dataType         : String(2);
+  registrationDate : Date;
 }
