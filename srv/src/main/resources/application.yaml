@@ -1,7 +1,6 @@
 
 ---
 spring:
-  config.activate.on-profile: default
   sql.init.platform: h2
   security:
     user:
@@ -9,6 +8,9 @@ spring:
       password: admin
 cds:
   data-source.auto-config.enabled: false
+  security:
+    mock:
+      enabled: true   
 ---
 management:
   endpoint:

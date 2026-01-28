@@ -1,9 +1,10 @@
 using {S4_READ_SERVICE as s4} from './external/S4_READ_SERVICE';
+using { db } from '../db/schema';
 
-service SerialService {
+service SerialService @(requires: 'any') {
 
   // 外部（S/4 CDS View）を投影して参照できるようにする
-  entity SerialData as projection on s4.MachineView;
+  entity SerialData  @(requires: 'any') as projection on db.MachineView;
 
   // MARK: アクション・ファンクション
 

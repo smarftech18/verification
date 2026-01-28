@@ -69,5 +69,12 @@ annotate svc.SerialData with @(
       Property: registrationDate,
       AllowedExpressions: 'SingleRange'
     }]
-  }
+  },
+  Capabilities.InsertRestrictions : { Insertable : false },
+  Capabilities.DeleteRestrictions : { Deletable : false },
+  Capabilities.UpdateRestrictions : { Updatable : true }, // 明示しておくと安全
+  restrict: [
+    { grant: ['READ','UPDATE'], to: 'any' }
+  ],
+  UI.UpdateHidden: false
 );
