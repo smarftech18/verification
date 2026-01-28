@@ -24,9 +24,9 @@
 
 //     var data = ctx.getData();
 //     String s4Key = (String) data.get("s4Key");
-//     String machineNo = (String) data.get("machineNo");
+//     String serialNo = (String) data.get("serialNo");
 
-//     if (machineNo == null || machineNo.isBlank()) {
+//     if (serialNo == null || serialNo.isBlank()) {
 //       ctx.reject(400, "機番は必須です");
 //       return;
 //     }
@@ -34,19 +34,19 @@
 //     // 1) S/4 更新（Entity更新型 or Action型のどちらで来ても対応できるように）
 //     s4Update.run(
 //       Update.entity("S4_UPDATE_SERVICE.MachineUpdate")
-//         .data(Map.of("s4Key", s4Key, "machineNo", machineNo))
+//         .data(Map.of("s4Key", s4Key, "serialNo", serialNo))
 //     );
 //     // もしくは Action 型なら:
-//     // s4Update.run(Call.action("S4_UPDATE_SERVICE.UpdateMachineNo").params(...));
+//     // s4Update.run(Call.action("S4_UPDATE_SERVICE.UpdateserialNo").params(...));
 
 //     // 2) BTP別CAP TableA / TableB 更新
 //     btpRemote.run(
 //       Update.entity("BTP_REMOTE_SERVICE.TableA")
-//         .data(Map.of("s4Key", s4Key, "machineNo", machineNo))
+//         .data(Map.of("s4Key", s4Key, "serialNo", serialNo))
 //     );
 //     btpRemote.run(
 //       Update.entity("BTP_REMOTE_SERVICE.TableB")
-//         .data(Map.of("s4Key", s4Key, "machineNo", machineNo))
+//         .data(Map.of("s4Key", s4Key, "serialNo", serialNo))
 //     );
 
 //     ctx.setCompleted(); // UIに保存成功を返す

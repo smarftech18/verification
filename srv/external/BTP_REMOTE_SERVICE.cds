@@ -10,5 +10,5 @@ service BTP_REMOTE_SERVICE {
   }
 
   // こちらもAction型の可能性に備えられる
-  action UpdateMachineNoAll(s4Key:String(30), machineNo:String(30)) returns Boolean;
+  action UpdateserialNoAll(s4Key:String(30), serialNo:String(30)) returns Boolean;
 }
