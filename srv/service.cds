@@ -3,15 +3,23 @@ using { db } from '../db/schema';
 
 service SerialService @(requires: 'any') {
   
-  // 外部（S/4 CDS View）を投影して参照できるようにする
+  // 一覧・参照は必ずS4
+  @readonly
+  entity SerialData  @(requires: 'any') as projection on s4.MachineView;
+
   @odata.draft.enabled
-  entity SerialData  @(requires: 'any') as projection on db.MachineView;
+  entity SerialDataEdit  @(requires: 'any') as projection on db.MachineEdit{
+    key s4Key,
+    serialNo,
+    toRead: Association to one SerialData on toRead.s4Key = $self.s4Key  // serialDataとSerialDataEditのs4keyで結合
+  };
+
 
   // MARK: アクション・ファンクション
 
   // ①FunctionはOutputValue。複数条件は “分解して” collection params で受ける
-  function searchSerialNo(inputValue: InputValue) returns many SerialData;
-}
+//   function searchSerialNo(inputValue: InputValue) returns many SerialData;
+// }
 
 // UI入力の概念としては残してOK（設計書・注釈用）
 type InputValue {
@@ -29,4 +37,5 @@ type OutputValue {
   serialNo         : String(30);
   dataType         : String(2);
   registrationDate : Date;
+}
 }
