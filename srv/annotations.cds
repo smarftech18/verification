@@ -1,8 +1,8 @@
 using SerialService as srv from './service';
 
 annotate srv.SerialDataEdit with @(
-  Capabilities.InsertRestrictions: {Insertable: false},
-  Capabilities.DeleteRestrictions: {Deletable: false},
+  // Capabilities.InsertRestrictions: {Insertable: false},
+  // Capabilities.DeleteRestrictions: {Deletable: false},
   UI.SelectionFields             : [
     s4Key,
     serialNo,
