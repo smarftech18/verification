@@ -3,6 +3,7 @@ using { db } from '../db/schema';
 
 service SerialService @(requires: 'any') {
   
+  
   // 一覧・参照は必ずS4
   @readonly
   entity SerialData  @(requires: 'any') as projection on s4.MachineView;
