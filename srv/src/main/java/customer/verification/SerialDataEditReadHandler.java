@@ -18,9 +18,9 @@ import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
 
+import cds.gen.SaveResult;
+import cds.gen.serialservice.SaveSerialNoContext;
 import cds.gen.serialservice.SerialData;
-import cds.gen.serialservice.SerialDataEdit;
-import cds.gen.serialservice.SerialDataEdit_;
 import cds.gen.serialservice.SerialData_;
 import cds.gen.serialservice.SerialService_;
 
@@ -28,63 +28,75 @@ import cds.gen.serialservice.SerialService_;
 @ServiceName(SerialService_.CDS_NAME)
 public class SerialDataEditReadHandler implements EventHandler {
 
-    private final PersistenceService db;
+  // private final PersistenceService db;
 
-    public SerialDataEditReadHandler(PersistenceService db) {
-        this.db = db;
-    }
+  // public SerialDataEditReadHandler(PersistenceService db) {
+  // this.db = db;
+  // }
 
-@Before(event = CqnService.EVENT_READ, entity = SerialDataEdit_.CDS_NAME)
-  public void ensureBeforeRead(CdsReadEventContext ctx) {
+  @On(event = "saveSerialNo")
+  public void onSaveSerialNo(SaveSerialNoContext ctx) {
 
-    // ListReportはDraft情報を含む複雑なREADを投げるので、
-    // ここでは「ensureだけ」して、結果は標準処理に任せる（setResultしない）
+    System.out.println("=== saveSerialNo CALLED ===");
+    System.out.println("newSerialNo = " + ctx.getNewSerialNo());
 
-    // S/4 (SerialData projection) は service 経由で読む
-    Result s4Res = ctx.getService().run(
-        Select.from(SerialData_.CDS_NAME)
-              .columns(s -> s.get("s4Key"), s -> s.get("serialNo"))
-    );
-    List<SerialData> s4List = s4Res.listOf(SerialData.class);
+    // 仮レスポンス
+    SaveResult result = SaveResult.create();
+    result.setSuccess(true);
+    result.setMessage("OK");
 
-    for (SerialData row : s4List) {
-      SerialDataEdit edit = SerialDataEdit.create();
-      edit.setS4Key(row.getS4Key());
-      edit.setSerialNo(row.getSerialNo());
-      // DBへensure（Active行の器）
-      db.run(Upsert.into(SerialDataEdit_.class).entry(edit));
-    }
+    ctx.setResult(result);
   }
 
-// @On(event = CqnService.EVENT_READ, entity = SerialDataEdit_.CDS_NAME)
-// public void onReadSerialDataEdit(CdsReadEventContext ctx) {
+  // @Before(event = CqnService.EVENT_READ, entity = SerialDataEdit_.CDS_NAME)
+  // public void ensureBeforeRead(CdsReadEventContext ctx) {
 
-//     var cqn = ctx.getCqn().toString();
+  // // ListReportはDraft情報を含む複雑なREADを投げるので、
+  // // ここでは「ensureだけ」して、結果は標準処理に任せる（setResultしない）
 
-//     // Draft 内部アクセスは何もしない
-//     if (cqn.contains("DraftAdministrativeData")
-//         || cqn.contains("SiblingEntity")
-//         || cqn.contains("IsActiveEntity=false")) {
-//         return; // CAP 標準処理へ
-//     }
+  // // S/4 (SerialData projection) は service 経由で読む
+  // Result s4Res = ctx.getService().run(
+  // Select.from(SerialData_.CDS_NAME)
+  // .columns(s -> s.get("s4Key"), s -> s.get("serialNo"))
+  // );
+  // List<SerialData> s4List = s4Res.listOf(SerialData.class);
 
-//     // --- ensure ---
-//     var s4List = ctx.getService()
-//         .run(Select.from(SerialData_.class)
-//                    .columns(s -> s.s4Key(), s -> s.serialNo()))
-//         .listOf(SerialData.class);
+  // for (SerialData row : s4List) {
+  // SerialDataEdit edit = SerialDataEdit.create();
+  // edit.setS4Key(row.getS4Key());
+  // edit.setSerialNo(row.getSerialNo());
+  // // DBへensure（Active行の器）
+  // db.run(Upsert.into(SerialDataEdit_.class).entry(edit));
+  // }
+  // }
 
-//     for (var s4 : s4List) {
-//         var edit = SerialDataEdit.create();
-//         edit.setS4Key(s4.getS4Key());
-//         edit.setSerialNo(s4.getSerialNo());
-//         db.run(Upsert.into(SerialDataEdit_.class).entry(edit));
-//     }
+  // // @On(event = CqnService.EVENT_READ, entity = SerialDataEdit_.CDS_NAME)
+  // // public void onReadSerialDataEdit(CdsReadEventContext ctx) {
 
-//     // ★ここが重要
-//     ctx.setResult(db.run(ctx.getCqn()));
-// }
+  // // var cqn = ctx.getCqn().toString();
 
+  // // // Draft 内部アクセスは何もしない
+  // // if (cqn.contains("DraftAdministrativeData")
+  // // || cqn.contains("SiblingEntity")
+  // // || cqn.contains("IsActiveEntity=false")) {
+  // // return; // CAP 標準処理へ
+  // // }
 
+  // // // --- ensure ---
+  // // var s4List = ctx.getService()
+  // // .run(Select.from(SerialData_.class)
+  // // .columns(s -> s.s4Key(), s -> s.serialNo()))
+  // // .listOf(SerialData.class);
+
+  // // for (var s4 : s4List) {
+  // // var edit = SerialDataEdit.create();
+  // // edit.setS4Key(s4.getS4Key());
+  // // edit.setSerialNo(s4.getSerialNo());
+  // // db.run(Upsert.into(SerialDataEdit_.class).entry(edit));
+  // // }
+
+  // // // ★ここが重要
+  // // ctx.setResult(db.run(ctx.getCqn()));
+  // // }
 
 }
