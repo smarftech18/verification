@@ -124,7 +124,7 @@ service SalesDocumentService @(path: '/api/sales-documents') {
     left join  db.master.PlantMaster    as pm  on  pm.Plant         = item.Plant
   {
     // ヘッダ項目
-    item.SalesDocument,
+    key item.SalesDocument,
     hdr.SalesDocumentDate,
     hdr.SalesDocumentType,
     hdr.SalesOrganization,
@@ -142,7 +142,7 @@ service SalesDocumentService @(path: '/api/sales-documents') {
     cm.SalesDistrict,
 
     // 明細項目
-    item.SalesDocumentItem,
+    key item.SalesDocumentItem,
     item.OrderQuantity,
     item.OrderQuantityUnit,
     item.NetAmount,
