@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+  </edmx:Reference>
+  
+  <edmx:DataServices>
+    <Schema Namespace="API_SALES_ORDER_SRV" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      
+      <!-- 売上伝票ヘッダCDSビュー -->
+      <EntityType Name="SalesOrderHeaderView">
+        <Key>
+          <PropertyRef Name="SalesOrder"/>
+        </Key>
+        <Property Name="SalesOrder" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="SoldToParty" Type="Edm.String" MaxLength="10"/>
+        <Property Name="SalesOrganization" Type="Edm.String" MaxLength="4"/>
+        <Property Name="DistributionChannel" Type="Edm.String" MaxLength="2"/>
+        <Property Name="SalesOrderDate" Type="Edm.Date"/>
+        <Property Name="TotalNetAmount" Type="Edm.Decimal" Scale="2" Precision="15"/>
+        <Property Name="TransactionCurrency" Type="Edm.String" MaxLength="3"/>
+        <Property Name="CustomerName" Type="Edm.String" MaxLength="80"/>
+        <Property Name="CustomerGroup" Type="Edm.String" MaxLength="2"/>
+      </EntityType>
+      
+      <!-- 売上伝票明細CDSビュー -->
+      <EntityType Name="SalesOrderItemView">
+        <Key>
+          <PropertyRef Name="SalesOrder"/>
+          <PropertyRef Name="SalesOrderItem"/>
+        </Key>
+        <Property Name="SalesOrder" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="SalesOrderItem" Type="Edm.String" MaxLength="6" Nullable="false"/>
+        <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OrderQuantity" Type="Edm.Decimal" Scale="3" Precision="13"/>
+        <Property Name="OrderQuantityUnit" Type="Edm.String" MaxLength="3"/>
+        <Property Name="NetAmount" Type="Edm.Decimal" Scale="2" Precision="15"/>
+        <Property Name="MaterialGroup" Type="Edm.String" MaxLength="9"/>
+        <Property Name="Plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="StorageLocation" Type="Edm.String" MaxLength="4"/>
+      </EntityType>
+      
+      <!-- 外部マスタテーブル（顧客） -->
+      <EntityType Name="CustomerMaster">
+        <Key>
+          <PropertyRef Name="Customer"/>
+        </Key>
+        <Property Name="Customer" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="CustomerName" Type="Edm.String" MaxLength="80"/>
+        <Property Name="CustomerGroup" Type="Edm.String" MaxLength="2"/>
+        <Property Name="Country" Type="Edm.String" MaxLength="3"/>
+        <Property Name="PaymentTerms" Type="Edm.String" MaxLength="4"/>
+        <Property Name="CreditLimit" Type="Edm.Decimal" Scale="2" Precision="15"/>
+      </EntityType>
+      
+      <!-- 外部マスタテーブル（品目） -->
+      <EntityType Name="MaterialMaster">
+        <Key>
+          <PropertyRef Name="Material"/>
+        </Key>
+        <Property Name="Material" Type="Edm.String" MaxLength="40" Nullable="false"/>
+        <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40"/>
+        <Property Name="MaterialGroup" Type="Edm.String" MaxLength="9"/>
+        <Property Name="BaseUnit" Type="Edm.String" MaxLength="3"/>
+        <Property Name="MaterialType" Type="Edm.String" MaxLength="4"/>
+        <Property Name="GrossWeight" Type="Edm.Decimal" Scale="3" Precision="13"/>
+        <Property Name="WeightUnit" Type="Edm.String" MaxLength="3"/>
+      </EntityType>
+      
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="SalesOrderHeaderView" EntityType="API_SALES_ORDER_SRV.SalesOrderHeaderView"/>
+        <EntitySet Name="SalesOrderItemView" EntityType="API_SALES_ORDER_SRV.SalesOrderItemView"/>
+        <EntitySet Name="CustomerMaster" EntityType="API_SALES_ORDER_SRV.CustomerMaster"/>
+        <EntitySet Name="MaterialMaster" EntityType="API_SALES_ORDER_SRV.MaterialMaster"/>
+      </EntityContainer>
+      
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
