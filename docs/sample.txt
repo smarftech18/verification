@@ -1,0 +1,253 @@
+package com.example.cap.handler;
+
+import com.sap.cds.services.EventContext;
+import com.sap.cds.services.ServiceException;
+import com.sap.cds.ql.Select;
+import com.sap.cds.services.cds.CdsService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * 売上伝票作成ハンドラ サンプル実装
+ *
+ * 処理構造:
+ * 1処理(イベントハンドラ)
+ *  └ 2処理(前処理)
+ *     └ 3処理(データ準備)
+ *        └ 4処理(伝票番号ループ)
+ *           └ 5処理(明細ループ)
+ *              └ 6処理(データ作成)
+ *                 └ 7処理,8処理,9処理(OData呼び出し)
+ */
+public class SalesDocumentHandler {
+
+    // -------------------------------------------------------
+    // クラス変数: エラーメッセージ収集用
+    // -------------------------------------------------------
+    private List<String> errorMessages = new ArrayList<>();
+
+
+    // -------------------------------------------------------
+    // カスタム例外クラス
+    // 「この伝票/明細の処理は失敗した」を呼び出し元に伝えるためだけの例外
+    // 1処理(イベントハンドラ)まではthrowしない
+    // -------------------------------------------------------
+    static class DocumentProcessingException extends RuntimeException {
+        public DocumentProcessingException(String message) {
+            super(message);
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // 1処理: CAPイベントハンドラ
+    // ・エラーメッセージの初期化
+    // ・全処理完了後にctx.setResult()でエラー内容を返す
+    // -------------------------------------------------------
+    public void onCreate(EventContext ctx) {
+
+        // 処理開始時にリセット（前回の残りが残らないように）
+        errorMessages.clear();
+
+        try {
+            // 2処理へ
+            executePreProcess(ctx);
+
+        } catch (Exception e) {
+            // 予期しない例外が万が一ここまで来た場合の保険
+            errorMessages.add("予期しないエラーが発生しました: " + e.getMessage());
+        }
+
+        // 例外の有無に関わらず必ずここに到達する
+        // → ctx.setResult() が必ず実行される
+        if (!errorMessages.isEmpty()) {
+            String combinedMessage = String.join("\n", errorMessages);
+            ctx.setResult(combinedMessage);
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // 2処理: 前処理
+    // -------------------------------------------------------
+    private void executePreProcess(EventContext ctx) {
+        // 前処理があればここに記述
+        // ...
+
+        // 3処理へ
+        prepareData(ctx);
+    }
+
+
+    // -------------------------------------------------------
+    // 3処理: データ準備
+    // -------------------------------------------------------
+    private void prepareData(EventContext ctx) {
+        // データ取得などの準備処理
+        // ...
+
+        // サンプルデータ作成（実際はCDSViewから取得）
+        List<SalesData> sourceData = fetchSourceData();
+
+        // 4処理へ
+        processGroupedByVoucher(sourceData);
+    }
+
+
+    // -------------------------------------------------------
+    // 4処理: 伝票番号でグループ化してループ
+    // ・DocumentProcessingExceptionをcatchして次の伝票へ進む
+    // -------------------------------------------------------
+    private void processGroupedByVoucher(List<SalesData> sourceData) {
+
+        // 伝票番号でグループ化
+        // Map<伝票番号, そのデータリスト>
+        Map<String, List<SalesData>> groupedData = sourceData.stream()
+            .collect(Collectors.groupingBy(SalesData::getVoucherNo));
+
+        // 伝票番号ループ
+        for (Map.Entry<String, List<SalesData>> entry : groupedData.entrySet()) {
+            String voucherNo = entry.getKey();
+            List<SalesData> dataList = entry.getValue();
+
+            try {
+                // 5処理へ
+                processLineItems(voucherNo, dataList);
+
+            } catch (DocumentProcessingException e) {
+                // 5処理以降で発生した例外はここで止める
+                // エラーメッセージはすでに収集済みなのでここでは何もしない
+                // continueで次の伝票番号へ進む
+                continue;
+            }
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // 5処理: 明細ループ
+    // ・DocumentProcessingExceptionをcatchして次の明細へ進む
+    // -------------------------------------------------------
+    private void processLineItems(String voucherNo, List<SalesData> dataList) {
+
+        for (SalesData data : dataList) {
+            try {
+                // 6処理へ
+                createDocumentData(voucherNo, data);
+
+            } catch (DocumentProcessingException e) {
+                // 6処理以降で発生した例外はここで止める
+                // continueで次の明細へ進む
+                continue;
+            }
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // 6処理: データ作成処理
+    // ・catchしない → 例外をそのまま5処理に伝播させる
+    // -------------------------------------------------------
+    private void createDocumentData(String voucherNo, SalesData data) {
+
+        // 7処理以降はcatchしない
+        // → 例外が発生したらそのまま5処理のcatchに伝播
+        callODataForHeader(voucherNo, data);    // 7処理
+        callODataForLineItem(voucherNo, data);  // 8処理
+        callODataForDetail(voucherNo, data);    // 9処理
+        // ... 以降同様
+    }
+
+
+    // -------------------------------------------------------
+    // 7処理: OData呼び出し(ヘッダ作成)
+    // ・OData例外をcatch → エラーメッセージ収集 → カスタム例外throw
+    // -------------------------------------------------------
+    private void callODataForHeader(String voucherNo, SalesData data) {
+        try {
+            // ODataサービス呼び出し
+            // remoteService.run(...);
+
+        } catch (ServiceException e) {
+            // エラーメッセージをクラス変数に収集
+            errorMessages.add(
+                String.format("伝票[%s] ヘッダ作成エラー: %s", voucherNo, e.getMessage())
+            );
+            // カスタム例外をthrow → 6処理を経由して5処理のcatchへ
+            // ※ 1処理(イベントハンドラ)までは届かない
+            throw new DocumentProcessingException(e.getMessage());
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // 8処理: OData呼び出し(明細作成)
+    // -------------------------------------------------------
+    private void callODataForLineItem(String voucherNo, SalesData data) {
+        try {
+            // ODataサービス呼び出し
+            // remoteService.run(...);
+
+        } catch (ServiceException e) {
+            errorMessages.add(
+                String.format("伝票[%s] 明細作成エラー: %s", voucherNo, e.getMessage())
+            );
+            throw new DocumentProcessingException(e.getMessage());
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // 9処理: OData呼び出し(詳細作成)
+    // -------------------------------------------------------
+    private void callODataForDetail(String voucherNo, SalesData data) {
+        try {
+            // ODataサービス呼び出し
+            // remoteService.run(...);
+
+        } catch (ServiceException e) {
+            errorMessages.add(
+                String.format("伝票[%s] 詳細作成エラー: %s", voucherNo, e.getMessage())
+            );
+            throw new DocumentProcessingException(e.getMessage());
+        }
+    }
+
+
+    // -------------------------------------------------------
+    // サンプルデータ取得（実際はCDSViewから取得）
+    // -------------------------------------------------------
+    private List<SalesData> fetchSourceData() {
+        List<SalesData> list = new ArrayList<>();
+        list.add(new SalesData("V001", "L001", "1000", "2024"));
+        list.add(new SalesData("V001", "L002", "1000", "2024"));
+        list.add(new SalesData("V002", "L001", "2000", "2023"));
+        return list;
+    }
+
+
+    // -------------------------------------------------------
+    // サンプルデータクラス
+    // -------------------------------------------------------
+    static class SalesData {
+        private String voucherNo;
+        private String lineNo;
+        private String companyCode;
+        private String fiscalYear;
+
+        public SalesData(String voucherNo, String lineNo, String companyCode, String fiscalYear) {
+            this.voucherNo   = voucherNo;
+            this.lineNo      = lineNo;
+            this.companyCode = companyCode;
+            this.fiscalYear  = fiscalYear;
+        }
+
+        public String getVoucherNo()   { return voucherNo; }
+        public String getLineNo()      { return lineNo; }
+        public String getCompanyCode() { return companyCode; }
+        public String getFiscalYear()  { return fiscalYear; }
+    }
+}

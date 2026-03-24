@@ -15,7 +15,6 @@ context master {
   // 検索条件: CustomerID + SalesOrganization + DistributionChannel + Division
   //           → CDS Viewのレコード単位で販売エリアの組み合わせが変動する
   // --------------------------------------------------------------
-  @cds.persistence.exists
   entity CustomerMaster {
     key CustomerID          : String(10);   // 得意先コード
     key SalesOrganization   : String(4);    // 販売組織
@@ -34,7 +33,6 @@ context master {
   // シノニム名: MATERIAL_MASTER
   // 検索条件: MaterialCode → CDS Viewの明細レコード単位で変動する
   // --------------------------------------------------------------
-  @cds.persistence.exists
   entity MaterialMaster {
     key MaterialCode      : String(18);   // 品目コード
         MaterialName      : String(40);   // 品目名
@@ -51,7 +49,6 @@ context master {
   // シノニム名: PLANT_MASTER
   // 検索条件: Plant → CDS Viewの明細レコード単位で変動する
   // --------------------------------------------------------------
-  @cds.persistence.exists
   entity PlantMaster {
     key Plant           : String(4);    // プラント
         PlantName       : String(30);   // プラント名
@@ -60,6 +57,29 @@ context master {
         FactoryCalendar : String(2);    // 工場カレンダー
   };
 
+}
+
+// ================================================================
+// 受注ヘッダ（SalesDocItemView の起点テーブル）
+// マスタ補完ビューの JOIN 起点となる受注データを保持する
+// SalesDocHeader/SalesDocItem/SalesDocDetail とは独立した別エンティティ
+// ================================================================
+entity OrderHeader {
+  key SalesDocument       : String(10);     // 受注番号
+  key SalesDocumentItem   : String(6);      // 明細番号
+      SalesOrganization   : String(4);      // 販売組織
+      DistributionChannel : String(2);      // 流通チャネル
+      Division            : String(2);      // 製品部門
+      CustomerID          : String(10);     // 得意先コード
+      MaterialCode        : String(18);     // 品目コード
+      Plant               : String(4);      // プラント
+      OrderDate           : Date;           // 受注日
+      OrderQuantity       : Decimal(13, 3); // 受注数量
+      OrderQuantityUnit   : String(3);      // 数量単位
+      NetAmount           : Decimal(15, 2); // 正味金額
+      Currency            : String(5);      // 通貨
+      StorageLocation     : String(4);      // 保管場所
+      PricingDate         : Date;           // 価格決定日
 }
 
 // ================================================================

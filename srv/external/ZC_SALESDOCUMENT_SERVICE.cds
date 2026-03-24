@@ -6,12 +6,12 @@
 
 @cds.external        : true
 @cds.persistence.skip: true
-service ZC_SALESDOCUMENT {
+service ZC_SALESDOCUMENT_SERVICE {
 
   @cds.external        : true
   @cds.persistence.skip: true
   @Common.Label        : 'Sales Document CDS View'
-  entity ZC_SalesDocument {
+  entity ZcSalesDocument {
     // ----------------------------------------------------------------
     // キー項目
     // ----------------------------------------------------------------
