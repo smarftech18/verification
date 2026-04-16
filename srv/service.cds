@@ -1,6 +1,7 @@
 using { com.example.bp        as db  } from '../db/schema';
 using { API_BUSINESS_PARTNER  as ext  } from './external/API_BUSINESS_PARTNER';
 using { ZC_SALESDOCUMENT_SERVICE      as s4   } from './external/ZC_SALESDOCUMENT_SERVICE';
+using { ZS_SALESDOC_UPDATE_SRV        as upd  } from './external/ZS_SALESDOC_UPDATE_SRV';
 
 // ---------------------------------------------------------------
 // BusinessPartnerService
@@ -191,5 +192,14 @@ service SalesDocumentService @(path: '/api/sales-documents') {
     statusText    : String(20);
     lastUpdated   : DateTime;
     errorMessage  : String(255);
+  };
+
+  // S4 ステータス更新アクション
+  // ローカルDB の SalesDocItem を対象に S4 へステータス更新 + ログ登録を行う
+  action updateS4Status() returns {
+    success      : Boolean;
+    message      : String;
+    successCount : Integer;
+    errorCount   : Integer;
   };
 }
