@@ -1,0 +1,567 @@
+@server=http://localhost:8080
+@username=authenticated
+@password=
+
+
+### BusinessPartners
+# @name BusinessPartners_GET
+GET {{server}}/odata/v4/api/business-partners/BusinessPartners
+Authorization: Basic {{username}}:{{password}}
+
+
+### BusinessPartners
+# @name BusinessPartners_POST
+POST {{server}}/odata/v4/api/business-partners/BusinessPartners
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "20501078-1f83-4c8d-866b-e8147d60939e",
+  "businessPartnerID": "D-20501078",
+  "fullName": "fullName-20501078",
+  "firstName": "firstName-20501078",
+  "lastName": "lastName-20501078",
+  "category": "8",
+  "isBlocked": true,
+  "isMarkedForDeletion": true,
+  "addresses": [
+    {
+      "ID": "29665150-4534-4c4d-aa37-d6b948a05eac",
+      "addressID": "D-29665150",
+      "country": "150",
+      "region": "150",
+      "postalCode": "e-29665150",
+      "cityName": "cityName-29665150",
+      "streetName": "streetName-29665150",
+      "houseNumber": "r-29665150",
+      "isDefault": true,
+      "emailAddresses": [
+        {
+          "ID": "30273811-abcd-43c0-b4c2-36c7e31bb962",
+          "email": "email-30273811",
+          "isDefault": false,
+          "createdAt": "2019-10-11T00:00:00.000Z",
+          "createdBy": "createdBy.i0vf7@example.com",
+          "modifiedAt": "2008-09-20T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.i0vf7@example.com"
+        },
+        {
+          "ID": "30273812-db1e-4fb1-9e55-35ec5022e52a",
+          "email": "email-30273812",
+          "isDefault": true,
+          "createdAt": "2014-09-26T00:00:00.000Z",
+          "createdBy": "createdBy.i0vf8@example.com",
+          "modifiedAt": "2017-09-16T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.i0vf8@example.com"
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "ID": "31318545-315d-45a1-86d4-5e94c7bfe269",
+          "phoneNumber": "phoneNumber-31318545",
+          "extension": "n-31318545",
+          "isDefault": false,
+          "createdAt": "2017-06-07T00:00:00.000Z",
+          "createdBy": "createdBy.in9jl@example.net",
+          "modifiedAt": "2007-09-05T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.in9jl@example.org"
+        },
+        {
+          "ID": "31318546-98ba-42ac-bfbb-d171c0799e39",
+          "phoneNumber": "phoneNumber-31318546",
+          "extension": "n-31318546",
+          "isDefault": true,
+          "createdAt": "2005-11-22T00:00:00.000Z",
+          "createdBy": "createdBy.in9jm@example.org",
+          "modifiedAt": "2022-09-20T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.in9jm@example.com"
+        }
+      ],
+      "createdAt": "2013-04-03T00:00:00.000Z",
+      "createdBy": "createdBy.hntry@example.net",
+      "modifiedAt": "2015-01-25T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.hntry@example.org"
+    },
+    {
+      "ID": "29665151-412f-46c6-a5aa-1eebd5d6e2a4",
+      "addressID": "D-29665151",
+      "country": "151",
+      "region": "151",
+      "postalCode": "e-29665151",
+      "cityName": "cityName-29665151",
+      "streetName": "streetName-29665151",
+      "houseNumber": "r-29665151",
+      "isDefault": false,
+      "emailAddresses": [
+        {
+          "ID": "19564714-4938-40f9-a5d8-95b1088b19be",
+          "email": "email-1956",
+          "isDefault": true,
+          "createdAt": "2010-11-04T00:00:00.000Z",
+          "createdBy": "createdBy.1ic@example.net",
+          "modifiedAt": "2002-05-08T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.1ic@example.com"
+        },
+        {
+          "ID": "1957137a-6775-4bd1-865a-2ac142cf2d8c",
+          "email": "email-1957",
+          "isDefault": false,
+          "createdAt": "2011-12-04T00:00:00.000Z",
+          "createdBy": "createdBy.1id@example.org",
+          "modifiedAt": "2005-08-09T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.1id@example.net"
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "ID": "6482721d-6e63-4c10-bce9-8ce02cc8c6c2",
+          "phoneNumber": "phoneNumber-6482721",
+          "extension": "on-6482721",
+          "isDefault": false,
+          "createdAt": "2005-07-27T00:00:00.000Z",
+          "createdBy": "createdBy.3uy3l@example.net",
+          "modifiedAt": "2010-03-28T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.3uy3l@example.org"
+        },
+        {
+          "ID": "64827224-0e10-47bb-af59-8ac37ade14b6",
+          "phoneNumber": "phoneNumber-6482722",
+          "extension": "on-6482722",
+          "isDefault": true,
+          "createdAt": "2010-03-13T00:00:00.000Z",
+          "createdBy": "createdBy.3uy3m@example.org",
+          "modifiedAt": "2010-08-12T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.3uy3m@example.com"
+        }
+      ],
+      "createdAt": "2014-06-11T00:00:00.000Z",
+      "createdBy": "createdBy.hntrz@example.com",
+      "modifiedAt": "2019-06-21T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.hntrz@example.net"
+    }
+  ],
+  "createdAt": "2015-09-14T00:00:00.000Z",
+  "createdBy": "createdBy.c7eqe@example.org",
+  "modifiedAt": "2018-07-16T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.c7eqe@example.com"
+}
+
+
+### BusinessPartners
+# @name BusinessPartners_PATCH
+PATCH {{server}}/odata/v4/api/business-partners/BusinessPartners/20501078-1f83-4c8d-866b-e8147d60939e
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "20501078-1f83-4c8d-866b-e8147d60939e",
+  "businessPartnerID": "D-20501078",
+  "fullName": "fullName-20501078",
+  "firstName": "firstName-20501078",
+  "lastName": "lastName-20501078",
+  "category": "8",
+  "isBlocked": true,
+  "isMarkedForDeletion": true,
+  "addresses": [
+    {
+      "ID": "29665150-4534-4c4d-aa37-d6b948a05eac",
+      "addressID": "D-29665150",
+      "country": "150",
+      "region": "150",
+      "postalCode": "e-29665150",
+      "cityName": "cityName-29665150",
+      "streetName": "streetName-29665150",
+      "houseNumber": "r-29665150",
+      "isDefault": true,
+      "emailAddresses": [
+        {
+          "ID": "30273811-abcd-43c0-b4c2-36c7e31bb962",
+          "email": "email-30273811",
+          "isDefault": false,
+          "createdAt": "2019-10-11T00:00:00.000Z",
+          "createdBy": "createdBy.i0vf7@example.com",
+          "modifiedAt": "2008-09-20T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.i0vf7@example.com"
+        },
+        {
+          "ID": "30273812-db1e-4fb1-9e55-35ec5022e52a",
+          "email": "email-30273812",
+          "isDefault": true,
+          "createdAt": "2014-09-26T00:00:00.000Z",
+          "createdBy": "createdBy.i0vf8@example.com",
+          "modifiedAt": "2017-09-16T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.i0vf8@example.com"
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "ID": "31318545-315d-45a1-86d4-5e94c7bfe269",
+          "phoneNumber": "phoneNumber-31318545",
+          "extension": "n-31318545",
+          "isDefault": false,
+          "createdAt": "2017-06-07T00:00:00.000Z",
+          "createdBy": "createdBy.in9jl@example.net",
+          "modifiedAt": "2007-09-05T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.in9jl@example.org"
+        },
+        {
+          "ID": "31318546-98ba-42ac-bfbb-d171c0799e39",
+          "phoneNumber": "phoneNumber-31318546",
+          "extension": "n-31318546",
+          "isDefault": true,
+          "createdAt": "2005-11-22T00:00:00.000Z",
+          "createdBy": "createdBy.in9jm@example.org",
+          "modifiedAt": "2022-09-20T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.in9jm@example.com"
+        }
+      ],
+      "createdAt": "2013-04-03T00:00:00.000Z",
+      "createdBy": "createdBy.hntry@example.net",
+      "modifiedAt": "2015-01-25T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.hntry@example.org"
+    },
+    {
+      "ID": "29665151-412f-46c6-a5aa-1eebd5d6e2a4",
+      "addressID": "D-29665151",
+      "country": "151",
+      "region": "151",
+      "postalCode": "e-29665151",
+      "cityName": "cityName-29665151",
+      "streetName": "streetName-29665151",
+      "houseNumber": "r-29665151",
+      "isDefault": false,
+      "emailAddresses": [
+        {
+          "ID": "19564714-4938-40f9-a5d8-95b1088b19be",
+          "email": "email-1956",
+          "isDefault": true,
+          "createdAt": "2010-11-04T00:00:00.000Z",
+          "createdBy": "createdBy.1ic@example.net",
+          "modifiedAt": "2002-05-08T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.1ic@example.com"
+        },
+        {
+          "ID": "1957137a-6775-4bd1-865a-2ac142cf2d8c",
+          "email": "email-1957",
+          "isDefault": false,
+          "createdAt": "2011-12-04T00:00:00.000Z",
+          "createdBy": "createdBy.1id@example.org",
+          "modifiedAt": "2005-08-09T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.1id@example.net"
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "ID": "6482721d-6e63-4c10-bce9-8ce02cc8c6c2",
+          "phoneNumber": "phoneNumber-6482721",
+          "extension": "on-6482721",
+          "isDefault": false,
+          "createdAt": "2005-07-27T00:00:00.000Z",
+          "createdBy": "createdBy.3uy3l@example.net",
+          "modifiedAt": "2010-03-28T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.3uy3l@example.org"
+        },
+        {
+          "ID": "64827224-0e10-47bb-af59-8ac37ade14b6",
+          "phoneNumber": "phoneNumber-6482722",
+          "extension": "on-6482722",
+          "isDefault": true,
+          "createdAt": "2010-03-13T00:00:00.000Z",
+          "createdBy": "createdBy.3uy3m@example.org",
+          "modifiedAt": "2010-08-12T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.3uy3m@example.com"
+        }
+      ],
+      "createdAt": "2014-06-11T00:00:00.000Z",
+      "createdBy": "createdBy.hntrz@example.com",
+      "modifiedAt": "2019-06-21T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.hntrz@example.net"
+    }
+  ],
+  "createdAt": "2015-09-14T00:00:00.000Z",
+  "createdBy": "createdBy.c7eqe@example.org",
+  "modifiedAt": "2018-07-16T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.c7eqe@example.com"
+}
+
+
+### BusinessPartners
+# @name BusinessPartners_DELETE
+DELETE {{server}}/odata/v4/api/business-partners/BusinessPartners/20501078-1f83-4c8d-866b-e8147d60939e
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### Addresses
+# @name Addresses_GET
+GET {{server}}/odata/v4/api/business-partners/Addresses
+Authorization: Basic {{username}}:{{password}}
+
+
+### Addresses
+# @name Addresses_POST
+POST {{server}}/odata/v4/api/business-partners/Addresses
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "29665150-4534-4c4d-aa37-d6b948a05eac",
+  "addressID": "D-29665150",
+  "country": "150",
+  "region": "150",
+  "postalCode": "e-29665150",
+  "cityName": "cityName-29665150",
+  "streetName": "streetName-29665150",
+  "houseNumber": "r-29665150",
+  "isDefault": true,
+  "emailAddresses": [
+    {
+      "ID": "30273811-abcd-43c0-b4c2-36c7e31bb962",
+      "email": "email-30273811",
+      "isDefault": false,
+      "createdAt": "2019-10-11T00:00:00.000Z",
+      "createdBy": "createdBy.i0vf7@example.com",
+      "modifiedAt": "2008-09-20T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.i0vf7@example.com"
+    },
+    {
+      "ID": "30273812-db1e-4fb1-9e55-35ec5022e52a",
+      "email": "email-30273812",
+      "isDefault": true,
+      "createdAt": "2014-09-26T00:00:00.000Z",
+      "createdBy": "createdBy.i0vf8@example.com",
+      "modifiedAt": "2017-09-16T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.i0vf8@example.com"
+    }
+  ],
+  "phoneNumbers": [
+    {
+      "ID": "31318545-315d-45a1-86d4-5e94c7bfe269",
+      "phoneNumber": "phoneNumber-31318545",
+      "extension": "n-31318545",
+      "isDefault": false,
+      "createdAt": "2017-06-07T00:00:00.000Z",
+      "createdBy": "createdBy.in9jl@example.net",
+      "modifiedAt": "2007-09-05T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.in9jl@example.org"
+    },
+    {
+      "ID": "31318546-98ba-42ac-bfbb-d171c0799e39",
+      "phoneNumber": "phoneNumber-31318546",
+      "extension": "n-31318546",
+      "isDefault": true,
+      "createdAt": "2005-11-22T00:00:00.000Z",
+      "createdBy": "createdBy.in9jm@example.org",
+      "modifiedAt": "2022-09-20T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.in9jm@example.com"
+    }
+  ],
+  "createdAt": "2013-04-03T00:00:00.000Z",
+  "createdBy": "createdBy.hntry@example.net",
+  "modifiedAt": "2015-01-25T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.hntry@example.org"
+}
+
+
+### Addresses
+# @name Addresses_PATCH
+PATCH {{server}}/odata/v4/api/business-partners/Addresses/29665150-4534-4c4d-aa37-d6b948a05eac
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "29665150-4534-4c4d-aa37-d6b948a05eac",
+  "addressID": "D-29665150",
+  "country": "150",
+  "region": "150",
+  "postalCode": "e-29665150",
+  "cityName": "cityName-29665150",
+  "streetName": "streetName-29665150",
+  "houseNumber": "r-29665150",
+  "isDefault": true,
+  "emailAddresses": [
+    {
+      "ID": "30273811-abcd-43c0-b4c2-36c7e31bb962",
+      "email": "email-30273811",
+      "isDefault": false,
+      "createdAt": "2019-10-11T00:00:00.000Z",
+      "createdBy": "createdBy.i0vf7@example.com",
+      "modifiedAt": "2008-09-20T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.i0vf7@example.com"
+    },
+    {
+      "ID": "30273812-db1e-4fb1-9e55-35ec5022e52a",
+      "email": "email-30273812",
+      "isDefault": true,
+      "createdAt": "2014-09-26T00:00:00.000Z",
+      "createdBy": "createdBy.i0vf8@example.com",
+      "modifiedAt": "2017-09-16T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.i0vf8@example.com"
+    }
+  ],
+  "phoneNumbers": [
+    {
+      "ID": "31318545-315d-45a1-86d4-5e94c7bfe269",
+      "phoneNumber": "phoneNumber-31318545",
+      "extension": "n-31318545",
+      "isDefault": false,
+      "createdAt": "2017-06-07T00:00:00.000Z",
+      "createdBy": "createdBy.in9jl@example.net",
+      "modifiedAt": "2007-09-05T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.in9jl@example.org"
+    },
+    {
+      "ID": "31318546-98ba-42ac-bfbb-d171c0799e39",
+      "phoneNumber": "phoneNumber-31318546",
+      "extension": "n-31318546",
+      "isDefault": true,
+      "createdAt": "2005-11-22T00:00:00.000Z",
+      "createdBy": "createdBy.in9jm@example.org",
+      "modifiedAt": "2022-09-20T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.in9jm@example.com"
+    }
+  ],
+  "createdAt": "2013-04-03T00:00:00.000Z",
+  "createdBy": "createdBy.hntry@example.net",
+  "modifiedAt": "2015-01-25T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.hntry@example.org"
+}
+
+
+### Addresses
+# @name Addresses_DELETE
+DELETE {{server}}/odata/v4/api/business-partners/Addresses/29665150-4534-4c4d-aa37-d6b948a05eac
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### EmailAddresses
+# @name EmailAddresses_GET
+GET {{server}}/odata/v4/api/business-partners/EmailAddresses
+Authorization: Basic {{username}}:{{password}}
+
+
+### EmailAddresses
+# @name EmailAddresses_POST
+POST {{server}}/odata/v4/api/business-partners/EmailAddresses
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "30273811-abcd-43c0-b4c2-36c7e31bb962",
+  "email": "email-30273811",
+  "isDefault": false,
+  "createdAt": "2019-10-11T00:00:00.000Z",
+  "createdBy": "createdBy.i0vf7@example.com",
+  "modifiedAt": "2008-09-20T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.i0vf7@example.com"
+}
+
+
+### EmailAddresses
+# @name EmailAddresses_PATCH
+PATCH {{server}}/odata/v4/api/business-partners/EmailAddresses/30273811-abcd-43c0-b4c2-36c7e31bb962
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "30273811-abcd-43c0-b4c2-36c7e31bb962",
+  "email": "email-30273811",
+  "isDefault": false,
+  "createdAt": "2019-10-11T00:00:00.000Z",
+  "createdBy": "createdBy.i0vf7@example.com",
+  "modifiedAt": "2008-09-20T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.i0vf7@example.com"
+}
+
+
+### EmailAddresses
+# @name EmailAddresses_DELETE
+DELETE {{server}}/odata/v4/api/business-partners/EmailAddresses/30273811-abcd-43c0-b4c2-36c7e31bb962
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### PhoneNumbers
+# @name PhoneNumbers_GET
+GET {{server}}/odata/v4/api/business-partners/PhoneNumbers
+Authorization: Basic {{username}}:{{password}}
+
+
+### PhoneNumbers
+# @name PhoneNumbers_POST
+POST {{server}}/odata/v4/api/business-partners/PhoneNumbers
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "31318545-315d-45a1-86d4-5e94c7bfe269",
+  "phoneNumber": "phoneNumber-31318545",
+  "extension": "n-31318545",
+  "isDefault": false,
+  "createdAt": "2017-06-07T00:00:00.000Z",
+  "createdBy": "createdBy.in9jl@example.net",
+  "modifiedAt": "2007-09-05T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.in9jl@example.org"
+}
+
+
+### PhoneNumbers
+# @name PhoneNumbers_PATCH
+PATCH {{server}}/odata/v4/api/business-partners/PhoneNumbers/31318545-315d-45a1-86d4-5e94c7bfe269
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "31318545-315d-45a1-86d4-5e94c7bfe269",
+  "phoneNumber": "phoneNumber-31318545",
+  "extension": "n-31318545",
+  "isDefault": false,
+  "createdAt": "2017-06-07T00:00:00.000Z",
+  "createdBy": "createdBy.in9jl@example.net",
+  "modifiedAt": "2007-09-05T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.in9jl@example.org"
+}
+
+
+### PhoneNumbers
+# @name PhoneNumbers_DELETE
+DELETE {{server}}/odata/v4/api/business-partners/PhoneNumbers/31318545-315d-45a1-86d4-5e94c7bfe269
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### S4BusinessPartners
+# @name S4BusinessPartners_GET
+GET {{server}}/odata/v4/api/business-partners/S4BusinessPartners
+Authorization: Basic {{username}}:{{password}}
+
+
+### S4Addresses
+# @name S4Addresses_GET
+GET {{server}}/odata/v4/api/business-partners/S4Addresses
+Authorization: Basic {{username}}:{{password}}
+
+
+### S4EmailAddresses
+# @name S4EmailAddresses_GET
+GET {{server}}/odata/v4/api/business-partners/S4EmailAddresses
+Authorization: Basic {{username}}:{{password}}
+
+
+### S4PhoneNumbers
+# @name S4PhoneNumbers_GET
+GET {{server}}/odata/v4/api/business-partners/S4PhoneNumbers
+Authorization: Basic {{username}}:{{password}}
+
+
+### importBusinessPartner
+# @name importBusinessPartner_POST
+POST {{server}}/odata/v4/api/business-partners/importBusinessPartner
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "businessPartnerID": "D-12412982",
+  "includeAddresses": true
+}

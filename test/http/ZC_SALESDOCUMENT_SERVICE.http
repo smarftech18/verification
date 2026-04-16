@@ -1,0 +1,82 @@
+@server=http://localhost:8080
+@username=authenticated
+@password=
+
+
+### ZcSalesDocument
+# @name ZcSalesDocument_GET
+GET {{server}}/odata/v4/ZC_SALESDOCUMENT_SERVICE/ZcSalesDocument
+Authorization: Basic {{username}}:{{password}}
+
+
+### ZcSalesDocument
+# @name ZcSalesDocument_POST
+POST {{server}}/odata/v4/ZC_SALESDOCUMENT_SERVICE/ZcSalesDocument
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocument": "nt-6793526",
+  "SalesDocumentItem": "793526",
+  "SequentialNumber": "526",
+  "SalesOrganization": "3526",
+  "DistributionChannel": "26",
+  "Division": "26",
+  "SalesDocumentDate": "2013-01-12",
+  "SalesDocumentType": "3526",
+  "CustomerID": "ID-6793526",
+  "MaterialCode": "terialCode-6793526",
+  "OrderQuantity": 5980552608.497,
+  "OrderQuantityUnit": "526",
+  "NetAmount": 9919075886344.9,
+  "Currency": "93526",
+  "Plant": "3526",
+  "StorageLocation": "3526",
+  "PricingDate": "2019-11-19",
+  "DetailCategory": "26",
+  "DetailText": "DetailText-6793526",
+  "DetailAmount": 717508720220.6,
+  "ConditionType": "3526",
+  "ScheduleLineDate": "2013-08-04",
+  "DeliveryScheduleQty": 5510370356.039
+}
+
+
+### ZcSalesDocument
+# @name ZcSalesDocument_PATCH
+PATCH {{server}}/odata/v4/ZC_SALESDOCUMENT_SERVICE/ZcSalesDocument(SalesDocument='nt-6793526',SalesDocumentItem='793526',SequentialNumber='526')
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocument": "nt-6793526",
+  "SalesDocumentItem": "793526",
+  "SequentialNumber": "526",
+  "SalesOrganization": "3526",
+  "DistributionChannel": "26",
+  "Division": "26",
+  "SalesDocumentDate": "2013-01-12",
+  "SalesDocumentType": "3526",
+  "CustomerID": "ID-6793526",
+  "MaterialCode": "terialCode-6793526",
+  "OrderQuantity": 5980552608.497,
+  "OrderQuantityUnit": "526",
+  "NetAmount": 9919075886344.9,
+  "Currency": "93526",
+  "Plant": "3526",
+  "StorageLocation": "3526",
+  "PricingDate": "2019-11-19",
+  "DetailCategory": "26",
+  "DetailText": "DetailText-6793526",
+  "DetailAmount": 717508720220.6,
+  "ConditionType": "3526",
+  "ScheduleLineDate": "2013-08-04",
+  "DeliveryScheduleQty": 5510370356.039
+}
+
+
+### ZcSalesDocument
+# @name ZcSalesDocument_DELETE
+DELETE {{server}}/odata/v4/ZC_SALESDOCUMENT_SERVICE/ZcSalesDocument(SalesDocument='nt-6793526',SalesDocumentItem='793526',SequentialNumber='526')
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}

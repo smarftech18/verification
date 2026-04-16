@@ -1,0 +1,515 @@
+@server=http://localhost:8080
+@username=authenticated
+@password=
+
+
+### SalesDocHeaders
+# @name SalesDocHeaders_GET
+GET {{server}}/odata/v4/api/sales-documents/SalesDocHeaders
+Authorization: Basic {{username}}:{{password}}
+
+
+### SalesDocHeaders
+# @name SalesDocHeaders_POST
+POST {{server}}/odata/v4/api/sales-documents/SalesDocHeaders
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocument": "s-21972492",
+  "SalesOrganization": "2492",
+  "DistributionChannel": "92",
+  "Division": "92",
+  "SalesDocumentDate": "2018-12-05",
+  "SalesDocumentType": "2492",
+  "CustomerID": "D-21972492",
+  "CustomerName": "CustomerName-21972492",
+  "CustomerGroup": "2492",
+  "Currency": "72492",
+  "TotalNetAmount": 8669739446389.59,
+  "Status": "92",
+  "ErrorMessage": "ErrorMessage-21972492",
+  "items": [
+    {
+      "SalesDocumentItem": "855558",
+      "MaterialCode": "erialCode-21855558",
+      "MaterialName": "MaterialName-21855558",
+      "MaterialGroup": "-21855558",
+      "OrderQuantity": 1285549792.246,
+      "OrderQuantityUnit": "558",
+      "NetAmount": 6630795505427.98,
+      "Currency": "55558",
+      "Plant": "5558",
+      "PlantName": "PlantName-21855558",
+      "CompanyCode": "5558",
+      "StorageLocation": "5558",
+      "PricingDate": "2018-05-16",
+      "details": [
+        {
+          "SalesDocument": "s-31563407",
+          "SalesDocumentItem": "563407",
+          "SequentialNumber": "407",
+          "DetailCategory": "07",
+          "DetailText": "DetailText-31563407",
+          "DetailAmount": 6357143783281.55,
+          "ConditionType": "3407",
+          "ScheduleLineDate": "2005-08-28",
+          "DeliveryScheduleQty": 7617387973.823,
+          "Currency": "63407",
+          "createdAt": "2006-05-12T00:00:00.000Z",
+          "createdBy": "createdBy.isihb@example.com",
+          "modifiedAt": "2020-04-27T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.isihb@example.net"
+        },
+        {
+          "SalesDocument": "s-31563408",
+          "SalesDocumentItem": "563408",
+          "SequentialNumber": "408",
+          "DetailCategory": "08",
+          "DetailText": "DetailText-31563408",
+          "DetailAmount": 1862693455211.76,
+          "ConditionType": "3408",
+          "ScheduleLineDate": "2008-01-15",
+          "DeliveryScheduleQty": 6697558426.674,
+          "Currency": "63408",
+          "createdAt": "2017-10-19T00:00:00.000Z",
+          "createdBy": "createdBy.isihc@example.org",
+          "modifiedAt": "2023-02-23T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.isihc@example.com"
+        }
+      ],
+      "createdAt": "2010-06-15T00:00:00.000Z",
+      "createdBy": "createdBy.d0fuu@example.com",
+      "modifiedAt": "2018-03-15T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.d0fuu@example.net"
+    },
+    {
+      "SalesDocumentItem": "855559",
+      "MaterialCode": "erialCode-21855559",
+      "MaterialName": "MaterialName-21855559",
+      "MaterialGroup": "-21855559",
+      "OrderQuantity": 1545197675.927,
+      "OrderQuantityUnit": "559",
+      "NetAmount": 7671165447470.14,
+      "Currency": "55559",
+      "Plant": "5559",
+      "PlantName": "PlantName-21855559",
+      "CompanyCode": "5559",
+      "StorageLocation": "5559",
+      "PricingDate": "2016-03-08",
+      "details": [
+        {
+          "SalesDocument": "s-25737226",
+          "SalesDocumentItem": "737226",
+          "SequentialNumber": "226",
+          "DetailCategory": "26",
+          "DetailText": "DetailText-25737226",
+          "DetailAmount": 7054280564957.45,
+          "ConditionType": "7226",
+          "ScheduleLineDate": "2018-05-05",
+          "DeliveryScheduleQty": 9509616380.75,
+          "Currency": "37226",
+          "createdAt": "2006-09-12T00:00:00.000Z",
+          "createdBy": "createdBy.fbmyy@example.org",
+          "modifiedAt": "2006-04-19T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.fbmyy@example.net"
+        },
+        {
+          "SalesDocument": "s-25737227",
+          "SalesDocumentItem": "737227",
+          "SequentialNumber": "227",
+          "DetailCategory": "27",
+          "DetailText": "DetailText-25737227",
+          "DetailAmount": 8522839494439.25,
+          "ConditionType": "7227",
+          "ScheduleLineDate": "2004-02-12",
+          "DeliveryScheduleQty": 1586407634.357,
+          "Currency": "37227",
+          "createdAt": "2002-03-05T00:00:00.000Z",
+          "createdBy": "createdBy.fbmyz@example.net",
+          "modifiedAt": "2015-11-23T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.fbmyz@example.com"
+        }
+      ],
+      "createdAt": "2000-10-26T00:00:00.000Z",
+      "createdBy": "createdBy.d0fuv@example.org",
+      "modifiedAt": "2003-06-17T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.d0fuv@example.org"
+    }
+  ],
+  "createdAt": "2020-08-26T00:00:00.000Z",
+  "createdBy": "createdBy.d2y30@example.net",
+  "modifiedAt": "2004-10-13T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.d2y30@example.com"
+}
+
+
+### SalesDocHeaders
+# @name SalesDocHeaders_PATCH
+PATCH {{server}}/odata/v4/api/sales-documents/SalesDocHeaders/s-21972492
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocument": "s-21972492",
+  "SalesOrganization": "2492",
+  "DistributionChannel": "92",
+  "Division": "92",
+  "SalesDocumentDate": "2018-12-05",
+  "SalesDocumentType": "2492",
+  "CustomerID": "D-21972492",
+  "CustomerName": "CustomerName-21972492",
+  "CustomerGroup": "2492",
+  "Currency": "72492",
+  "TotalNetAmount": 8669739446389.59,
+  "Status": "92",
+  "ErrorMessage": "ErrorMessage-21972492",
+  "items": [
+    {
+      "SalesDocumentItem": "855558",
+      "MaterialCode": "erialCode-21855558",
+      "MaterialName": "MaterialName-21855558",
+      "MaterialGroup": "-21855558",
+      "OrderQuantity": 1285549792.246,
+      "OrderQuantityUnit": "558",
+      "NetAmount": 6630795505427.98,
+      "Currency": "55558",
+      "Plant": "5558",
+      "PlantName": "PlantName-21855558",
+      "CompanyCode": "5558",
+      "StorageLocation": "5558",
+      "PricingDate": "2018-05-16",
+      "details": [
+        {
+          "SalesDocument": "s-31563407",
+          "SalesDocumentItem": "563407",
+          "SequentialNumber": "407",
+          "DetailCategory": "07",
+          "DetailText": "DetailText-31563407",
+          "DetailAmount": 6357143783281.55,
+          "ConditionType": "3407",
+          "ScheduleLineDate": "2005-08-28",
+          "DeliveryScheduleQty": 7617387973.823,
+          "Currency": "63407",
+          "createdAt": "2006-05-12T00:00:00.000Z",
+          "createdBy": "createdBy.isihb@example.com",
+          "modifiedAt": "2020-04-27T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.isihb@example.net"
+        },
+        {
+          "SalesDocument": "s-31563408",
+          "SalesDocumentItem": "563408",
+          "SequentialNumber": "408",
+          "DetailCategory": "08",
+          "DetailText": "DetailText-31563408",
+          "DetailAmount": 1862693455211.76,
+          "ConditionType": "3408",
+          "ScheduleLineDate": "2008-01-15",
+          "DeliveryScheduleQty": 6697558426.674,
+          "Currency": "63408",
+          "createdAt": "2017-10-19T00:00:00.000Z",
+          "createdBy": "createdBy.isihc@example.org",
+          "modifiedAt": "2023-02-23T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.isihc@example.com"
+        }
+      ],
+      "createdAt": "2010-06-15T00:00:00.000Z",
+      "createdBy": "createdBy.d0fuu@example.com",
+      "modifiedAt": "2018-03-15T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.d0fuu@example.net"
+    },
+    {
+      "SalesDocumentItem": "855559",
+      "MaterialCode": "erialCode-21855559",
+      "MaterialName": "MaterialName-21855559",
+      "MaterialGroup": "-21855559",
+      "OrderQuantity": 1545197675.927,
+      "OrderQuantityUnit": "559",
+      "NetAmount": 7671165447470.14,
+      "Currency": "55559",
+      "Plant": "5559",
+      "PlantName": "PlantName-21855559",
+      "CompanyCode": "5559",
+      "StorageLocation": "5559",
+      "PricingDate": "2016-03-08",
+      "details": [
+        {
+          "SalesDocument": "s-25737226",
+          "SalesDocumentItem": "737226",
+          "SequentialNumber": "226",
+          "DetailCategory": "26",
+          "DetailText": "DetailText-25737226",
+          "DetailAmount": 7054280564957.45,
+          "ConditionType": "7226",
+          "ScheduleLineDate": "2018-05-05",
+          "DeliveryScheduleQty": 9509616380.75,
+          "Currency": "37226",
+          "createdAt": "2006-09-12T00:00:00.000Z",
+          "createdBy": "createdBy.fbmyy@example.org",
+          "modifiedAt": "2006-04-19T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.fbmyy@example.net"
+        },
+        {
+          "SalesDocument": "s-25737227",
+          "SalesDocumentItem": "737227",
+          "SequentialNumber": "227",
+          "DetailCategory": "27",
+          "DetailText": "DetailText-25737227",
+          "DetailAmount": 8522839494439.25,
+          "ConditionType": "7227",
+          "ScheduleLineDate": "2004-02-12",
+          "DeliveryScheduleQty": 1586407634.357,
+          "Currency": "37227",
+          "createdAt": "2002-03-05T00:00:00.000Z",
+          "createdBy": "createdBy.fbmyz@example.net",
+          "modifiedAt": "2015-11-23T00:00:00.000Z",
+          "modifiedBy": "modifiedBy.fbmyz@example.com"
+        }
+      ],
+      "createdAt": "2000-10-26T00:00:00.000Z",
+      "createdBy": "createdBy.d0fuv@example.org",
+      "modifiedAt": "2003-06-17T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.d0fuv@example.org"
+    }
+  ],
+  "createdAt": "2020-08-26T00:00:00.000Z",
+  "createdBy": "createdBy.d2y30@example.net",
+  "modifiedAt": "2004-10-13T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.d2y30@example.com"
+}
+
+
+### SalesDocHeaders
+# @name SalesDocHeaders_DELETE
+DELETE {{server}}/odata/v4/api/sales-documents/SalesDocHeaders/s-21972492
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### SalesDocItems
+# @name SalesDocItems_GET
+GET {{server}}/odata/v4/api/sales-documents/SalesDocItems
+Authorization: Basic {{username}}:{{password}}
+
+
+### SalesDocItems
+# @name SalesDocItems_POST
+POST {{server}}/odata/v4/api/sales-documents/SalesDocItems
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocumentItem": "855558",
+  "MaterialCode": "erialCode-21855558",
+  "MaterialName": "MaterialName-21855558",
+  "MaterialGroup": "-21855558",
+  "OrderQuantity": 1285549792.246,
+  "OrderQuantityUnit": "558",
+  "NetAmount": 6630795505427.98,
+  "Currency": "55558",
+  "Plant": "5558",
+  "PlantName": "PlantName-21855558",
+  "CompanyCode": "5558",
+  "StorageLocation": "5558",
+  "PricingDate": "2018-05-16",
+  "details": [
+    {
+      "SalesDocument": "s-31563407",
+      "SalesDocumentItem": "563407",
+      "SequentialNumber": "407",
+      "DetailCategory": "07",
+      "DetailText": "DetailText-31563407",
+      "DetailAmount": 6357143783281.55,
+      "ConditionType": "3407",
+      "ScheduleLineDate": "2005-08-28",
+      "DeliveryScheduleQty": 7617387973.823,
+      "Currency": "63407",
+      "createdAt": "2006-05-12T00:00:00.000Z",
+      "createdBy": "createdBy.isihb@example.com",
+      "modifiedAt": "2020-04-27T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.isihb@example.net"
+    },
+    {
+      "SalesDocument": "s-31563408",
+      "SalesDocumentItem": "563408",
+      "SequentialNumber": "408",
+      "DetailCategory": "08",
+      "DetailText": "DetailText-31563408",
+      "DetailAmount": 1862693455211.76,
+      "ConditionType": "3408",
+      "ScheduleLineDate": "2008-01-15",
+      "DeliveryScheduleQty": 6697558426.674,
+      "Currency": "63408",
+      "createdAt": "2017-10-19T00:00:00.000Z",
+      "createdBy": "createdBy.isihc@example.org",
+      "modifiedAt": "2023-02-23T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.isihc@example.com"
+    }
+  ],
+  "createdAt": "2010-06-15T00:00:00.000Z",
+  "createdBy": "createdBy.d0fuu@example.com",
+  "modifiedAt": "2018-03-15T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.d0fuu@example.net"
+}
+
+
+### SalesDocItems
+# @name SalesDocItems_PATCH
+PATCH {{server}}/odata/v4/api/sales-documents/SalesDocItems(SalesDocument='s-21972492',SalesDocumentItem='855558')
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocumentItem": "855558",
+  "MaterialCode": "erialCode-21855558",
+  "MaterialName": "MaterialName-21855558",
+  "MaterialGroup": "-21855558",
+  "OrderQuantity": 1285549792.246,
+  "OrderQuantityUnit": "558",
+  "NetAmount": 6630795505427.98,
+  "Currency": "55558",
+  "Plant": "5558",
+  "PlantName": "PlantName-21855558",
+  "CompanyCode": "5558",
+  "StorageLocation": "5558",
+  "PricingDate": "2018-05-16",
+  "details": [
+    {
+      "SalesDocument": "s-31563407",
+      "SalesDocumentItem": "563407",
+      "SequentialNumber": "407",
+      "DetailCategory": "07",
+      "DetailText": "DetailText-31563407",
+      "DetailAmount": 6357143783281.55,
+      "ConditionType": "3407",
+      "ScheduleLineDate": "2005-08-28",
+      "DeliveryScheduleQty": 7617387973.823,
+      "Currency": "63407",
+      "createdAt": "2006-05-12T00:00:00.000Z",
+      "createdBy": "createdBy.isihb@example.com",
+      "modifiedAt": "2020-04-27T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.isihb@example.net"
+    },
+    {
+      "SalesDocument": "s-31563408",
+      "SalesDocumentItem": "563408",
+      "SequentialNumber": "408",
+      "DetailCategory": "08",
+      "DetailText": "DetailText-31563408",
+      "DetailAmount": 1862693455211.76,
+      "ConditionType": "3408",
+      "ScheduleLineDate": "2008-01-15",
+      "DeliveryScheduleQty": 6697558426.674,
+      "Currency": "63408",
+      "createdAt": "2017-10-19T00:00:00.000Z",
+      "createdBy": "createdBy.isihc@example.org",
+      "modifiedAt": "2023-02-23T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.isihc@example.com"
+    }
+  ],
+  "createdAt": "2010-06-15T00:00:00.000Z",
+  "createdBy": "createdBy.d0fuu@example.com",
+  "modifiedAt": "2018-03-15T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.d0fuu@example.net"
+}
+
+
+### SalesDocItems
+# @name SalesDocItems_DELETE
+DELETE {{server}}/odata/v4/api/sales-documents/SalesDocItems(SalesDocument='s-21972492',SalesDocumentItem='855558')
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### SalesDocDetails
+# @name SalesDocDetails_GET
+GET {{server}}/odata/v4/api/sales-documents/SalesDocDetails
+Authorization: Basic {{username}}:{{password}}
+
+
+### SalesDocDetails
+# @name SalesDocDetails_POST
+POST {{server}}/odata/v4/api/sales-documents/SalesDocDetails
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocument": "s-31563407",
+  "SalesDocumentItem": "563407",
+  "SequentialNumber": "407",
+  "DetailCategory": "07",
+  "DetailText": "DetailText-31563407",
+  "DetailAmount": 6357143783281.55,
+  "ConditionType": "3407",
+  "ScheduleLineDate": "2005-08-28",
+  "DeliveryScheduleQty": 7617387973.823,
+  "Currency": "63407",
+  "createdAt": "2006-05-12T00:00:00.000Z",
+  "createdBy": "createdBy.isihb@example.com",
+  "modifiedAt": "2020-04-27T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.isihb@example.net"
+}
+
+
+### SalesDocDetails
+# @name SalesDocDetails_PATCH
+PATCH {{server}}/odata/v4/api/sales-documents/SalesDocDetails(SalesDocument='s-31563407',SalesDocumentItem='563407',SequentialNumber='407')
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "SalesDocument": "s-31563407",
+  "SalesDocumentItem": "563407",
+  "SequentialNumber": "407",
+  "DetailCategory": "07",
+  "DetailText": "DetailText-31563407",
+  "DetailAmount": 6357143783281.55,
+  "ConditionType": "3407",
+  "ScheduleLineDate": "2005-08-28",
+  "DeliveryScheduleQty": 7617387973.823,
+  "Currency": "63407",
+  "createdAt": "2006-05-12T00:00:00.000Z",
+  "createdBy": "createdBy.isihb@example.com",
+  "modifiedAt": "2020-04-27T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.isihb@example.net"
+}
+
+
+### SalesDocDetails
+# @name SalesDocDetails_DELETE
+DELETE {{server}}/odata/v4/api/sales-documents/SalesDocDetails(SalesDocument='s-31563407',SalesDocumentItem='563407',SequentialNumber='407')
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### SalesDocItemView
+# @name SalesDocItemView_GET
+GET {{server}}/odata/v4/api/sales-documents/SalesDocItemView
+Authorization: Basic {{username}}:{{password}}
+
+
+### S4SalesDocuments
+# @name S4SalesDocuments_GET
+GET {{server}}/odata/v4/api/sales-documents/S4SalesDocuments
+Authorization: Basic {{username}}:{{password}}
+
+
+### createSalesDocuments
+# @name createSalesDocuments_POST
+POST {{server}}/odata/v4/api/sales-documents/createSalesDocuments
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "salesDocument": "nt-6520271",
+  "forceUpdate": false
+}
+
+
+### updateS4Status
+# @name updateS4Status_POST
+POST {{server}}/odata/v4/api/sales-documents/updateS4Status
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
