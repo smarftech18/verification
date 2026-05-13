@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 /**
  * ZC_SALESDOCUMENT_SERVICE のモックハンドラ（Pattern A: 常に例外）。
  *
- * <p>
+ * <p> 
  * createSalesDocuments アクションで呼ばれる {@code fetchZcSalesDocuments} の
  * S4 READ 呼び出しをインターセプトする。
  *

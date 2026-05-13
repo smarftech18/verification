@@ -147,6 +147,48 @@ entity SalesDocDetail : managed {
       Currency            : String(5);      // 通貨
 }
 
+// ================================================================
+// S4 データのローカルレプリカ（パターン2: データレプリケーション用）
+//
+// 【設計方針】
+// ZC_SALESDOCUMENT_SERVICE.ZcSalesDocument の全フィールドをローカル DB に保持する。
+// SalesReplicaHandler.java の replicateFromS4 アクションで S4 からデータを取得し、
+// このテーブルに UPSERT する。
+//
+// これにより SalesDocS4Replica と CAP ローカルエンティティ（SalesDocHeader 等）を
+// 通常の DB JOIN で結合できるため、フィルタ・ソート・ページングが完全に動作する。
+//
+// 【レプリカ更新タイミング】
+// - replicateFromS4 アクションを手動または定期ジョブで呼び出す
+// - リアルタイム同期が必要な場合は SAP Event Mesh でイベント受信時に更新する
+// ================================================================
+entity SalesDocS4Replica : managed {
+  key SalesDocument       : String(10);     // 受注番号
+  key SalesDocumentItem   : String(6);      // 明細番号
+  key SequentialNumber    : String(3);      // 連番
+      SalesOrganization   : String(4);      // 販売組織
+      DistributionChannel : String(2);      // 流通チャネル
+      Division            : String(2);      // 製品部門
+      SalesDocumentDate   : Date;           // 伝票日付
+      SalesDocumentType   : String(4);      // 伝票種別
+      CustomerID          : String(10);     // 得意先コード
+      MaterialCode        : String(18);     // 品目コード
+      OrderQuantity       : Decimal(13, 3); // 注文数量
+      OrderQuantityUnit   : String(3);      // 数量単位
+      NetAmount           : Decimal(15, 2); // 正味金額
+      Currency            : String(5);      // 通貨
+      Plant               : String(4);      // プラント
+      StorageLocation     : String(4);      // 保管場所
+      PricingDate         : Date;           // 価格決定日
+      DetailCategory      : String(2);      // 詳細区分
+      DetailText          : String(255);    // 詳細テキスト
+      DetailAmount        : Decimal(15, 2); // 詳細金額
+      ConditionType       : String(4);      // 条件タイプ
+      ScheduleLineDate    : Date;           // スケジュールライン納期
+      DeliveryScheduleQty : Decimal(13, 3); // スケジュールライン数量
+      ReplicatedAt        : DateTime;       // S4からの最終レプリカ日時
+}
+
 // ---------------------------------------------------------------
 // ローカルキャッシュ: 取引先マスタ
 // S/4HANAから取得した取引先情報をローカルに保持する
