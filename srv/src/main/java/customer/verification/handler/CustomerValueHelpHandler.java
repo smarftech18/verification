@@ -2,7 +2,7 @@ package customer.verification.handler;
 
 import com.sap.cds.Result;
 import com.sap.cds.ql.CQL;
-import com.sap.cds.ql.Predicate;
+import com.sap.cds.ql.Select;
 import com.sap.cds.ql.cqn.CqnPredicate;
 import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.cds.ql.cqn.CqnStructuredTypeRef;
@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * BusinessPartnerService.CustomerValueHelp の READ ハンドラ。
@@ -43,11 +44,11 @@ import java.util.Map;
  * Value Help のスクロールが機能しなかった。
  *
  * <p>本実装では {@link CQL#copy(com.sap.cds.ql.cqn.CqnStatement, Modifier)} で
- * 元の CqnSelect をコピーし、Modifier ではターゲットエンティティの ref のみを
+ * 元の CqnSelect をコピーし、Modifier では FROM（ターゲットエンティティの ref）のみを
  * 差し替える。items / orderBy / top / skip は一切触れず自動的に引き継がれる。
  * WHERE 句のプロパティ名変更・値加工は共通部品（{@link BusinessPartnerFilterMapper}）
- * に委譲し、その出力をそのまま Modifier#where() で差し込む（Modifier 内では
- * 加工ロジックを実装しない）。
+ * に完全に委譲し、その出力をコピー済みクエリの {@code where(...)} にそのまま上書きする
+ * （Modifier 側では WHERE の加工ロジックを一切実装しない）。
  */
 @Component
 @ServiceName("BusinessPartnerService")
@@ -74,12 +75,9 @@ public class CustomerValueHelpHandler implements EventHandler {
 
         CqnSelect original = ctx.getCqn();
 
-        // WHERE句の加工は共通部品に委譲する（ここではロジックを実装しない）
-        CqnPredicate mappedWhere = original.where()
-            .map(where -> BusinessPartnerFilterMapper.map(where, FIELD_RULES))
-            .orElse(null);
-
-        Modifier modifier = new Modifier() {
+        // Modifier の責務は FROM（ターゲットエンティティの ref）の差し替えのみ。
+        // items / orderBy / top / skip は触らない = 自動継承される。
+        Modifier fromOnlyModifier = new Modifier() {
             @Override
             public CqnStructuredTypeRef ref(CqnStructuredTypeRef ref) {
                 if (ref.segments().size() > 1) {
@@ -89,15 +87,17 @@ public class CustomerValueHelpHandler implements EventHandler {
                 }
                 return CQL.to(CQL.refSegment(S4_ENTITY)).asRef();
             }
-
-            @Override
-            public CqnPredicate where(Predicate where) {
-                return mappedWhere;
-            }
         };
 
-        // items / orderBy / top / skip は触らない = 自動継承される
-        CqnSelect remoteQuery = CQL.copy(original, modifier);
+        CqnSelect remoteQuery = CQL.copy(original, fromOnlyModifier);
+
+        // WHERE句のプロパティ名変更・値加工は共通部品に完全委譲し、
+        // その出力をコピー済みクエリの where(...) にそのまま上書きする。
+        Optional<CqnPredicate> mappedWhere = original.where()
+            .map(where -> BusinessPartnerFilterMapper.map(where, FIELD_RULES));
+        if (mappedWhere.isPresent()) {
+            remoteQuery = ((Select<?>) remoteQuery).where(mappedWhere.get());
+        }
 
         CqnService s4Service = (CqnService) runtime.getServiceCatalog()
             .getService(CqnService.class, S4_SERVICE_NAME);
