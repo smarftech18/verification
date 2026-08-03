@@ -63,6 +63,33 @@ service BusinessPartnerService @(path: '/api/business-partners') {
   entity S4PhoneNumbers        as projection on ext.A_AddressPhoneNumber;
 
   // ----------------------------------------------------------
+  // 取引先 Value Help（バリューヘルプ / F4検索）
+  //
+  // 【なぜカスタムハンドラが必要か】
+  // フィールド名は S4BusinessPartners と同様 A_BusinessPartner とそのまま一致させているため
+  // 通常はプロジェクションのみで自動委譲できる。
+  // しかし本エンティティの Value Help ダイアログでは、ユーザーが取引先IDを
+  // 先頭ゼロ抜きで入力する（例: "12345"）運用のため、S4 側の固定10桁ゼロ埋め
+  // キー（例: "0000012345"）と一致させる値加工が検索時に必要になる。
+  // これは CDS プロジェクションのエイリアスだけでは表現できないため、
+  // CustomerValueHelpHandler.java（@On READ）で WHERE 句のみ加工して委譲する。
+  //
+  // 【ページング】
+  // @cds.persistence.skip のため CAP は READ を完全にハンドラへ委譲する。
+  // ハンドラは items / orderBy / top / skip を自動継承する実装（CQL.copy + Modifier）
+  // のため、Value Help のスクロール（$skip 増加）が正しく機能する。
+  // ----------------------------------------------------------
+  @readonly
+  @cds.persistence.skip
+  entity CustomerValueHelp {
+    key BusinessPartner          : String(10);   // 取引先ID（S4: ゼロ埋め10桁固定）
+        BusinessPartnerFullName  : String(81);    // 取引先名
+        BusinessPartnerCategory  : String(1);     // '1'=個人, '2'=組織, '3'=グループ
+        BusinessPartnerIsBlocked : Boolean;       // ブロック状態
+        CreationDate              : Date;         // 作成日
+  };
+
+  // ----------------------------------------------------------
   // カスタムアクション
   // ----------------------------------------------------------
 

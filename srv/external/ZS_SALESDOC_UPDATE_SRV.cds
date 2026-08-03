@@ -22,7 +22,7 @@ service ZS_SALESDOC_UPDATE_SRV {
   @cds.filterable  : false
   entity UpdateSalesDocStatus {
     key p_key             : String(1)   not null;   // ダミーキー（常に ""）
-    key c_key             : String(1)あ   not null;   // ダミーキー（常に ""）
+    key c_key             : String(1)   not null;   // ダミーキー（常に ""）
         SalesDocument     : String(10)  not null;   // 売上伝票番号
         SalesDocumentItem : String(6)   not null;   // 明細番号
         ProcessingStatus  : String(2)   not null;   // 処理ステータス
