@@ -131,31 +131,21 @@ class CustomerValueHelpHandlerTest {
     }
 
     // ====================================================================
-    // WHERE句の値加工（共通部品: BusinessPartnerFilterMapper）
+    // WHERE句がそのまま引き継がれること（ref のみ差し替え、where は自動継承）
     // ====================================================================
 
     @Test
-    @DisplayName("取引先IDをゼロ抜きで検索しても、共通部品のゼロ埋め値加工でS4側キーと一致すること")
-    void search_withoutLeadingZeros_matchesPaddedS4Key() {
-        Map<String, Object> record = new LinkedHashMap<>();
-        record.put("BusinessPartner", "0000099999");
-        record.put("BusinessPartnerFullName", "ゼロ埋めテスト取引先");
-        record.put("BusinessPartnerCategory", "2");
-        record.put("BusinessPartnerIsBlocked", false);
-        record.put("CreationDate", LocalDate.of(2026, 1, 1));
-        db.run(Insert.into(S4_ENTITY).entry(record));
+    @DisplayName("WHERE句（取引先IDの完全一致）が正しくS4側に引き継がれ、対象の1件だけ絞り込めること")
+    void where_isForwardedUnchanged_filtersCorrectly() {
+        String targetId = TEST_ID_PREFIX + String.format("%09d", 42);
 
-        try {
-            CqnService service = businessPartnerService();
-            Result result = service.run(
-                Select.from(VH_ENTITY).where(r -> r.get("BusinessPartner").eq("99999"))
-            );
+        CqnService service = businessPartnerService();
+        Result result = service.run(
+            Select.from(VH_ENTITY).where(r -> r.get("BusinessPartner").eq(targetId))
+        );
 
-            List<Row> rows = result.list();
-            assertThat(rows).hasSize(1);
-            assertThat(rows.get(0).get("BusinessPartnerFullName")).isEqualTo("ゼロ埋めテスト取引先");
-        } finally {
-            db.run(Delete.from(S4_ENTITY).where(r -> r.get("BusinessPartner").eq("0000099999")));
-        }
+        List<Row> rows = result.list();
+        assertThat(rows).hasSize(1);
+        assertThat(rows.get(0).get("BusinessPartner")).isEqualTo(targetId);
     }
 }
