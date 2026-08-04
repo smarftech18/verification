@@ -2,9 +2,11 @@ package customer.verification.handler;
 
 import com.sap.cds.Result;
 import com.sap.cds.Row;
+import com.sap.cds.ql.CQL;
 import com.sap.cds.ql.Delete;
 import com.sap.cds.ql.Insert;
 import com.sap.cds.ql.Select;
+import com.sap.cds.ql.cqn.CqnStructuredTypeRef;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.persistence.PersistenceService;
 import com.sap.cds.services.runtime.CdsRuntime;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -147,5 +150,41 @@ class CustomerValueHelpHandlerTest {
         List<Row> rows = result.list();
         assertThat(rows).hasSize(1);
         assertThat(rows.get(0).get("BusinessPartner")).isEqualTo(targetId);
+    }
+
+    // ====================================================================
+    // ナビゲーション経由（ref セグメントのキー述語 → WHERE への変換）
+    // ====================================================================
+
+    private static final String LOCAL_BP_ENTITY = "com.example.bp.BusinessPartners";
+    private static final String NAV_ENTITY      = "BusinessPartnerService.BusinessPartners";
+
+    @Test
+    @DisplayName("BusinessPartners(ID)/to_valueHelpMatch のナビゲーション経由でも、親のキー述語がS4検索条件に正しく変換されること")
+    void navigationRead_translatesParentKeyToS4Filter() {
+        UUID localId = UUID.randomUUID();
+        String matchingBpId = TEST_ID_PREFIX + String.format("%09d", 1); // 既存seedデータの1件と一致させる
+
+        db.run(Insert.into(LOCAL_BP_ENTITY).entry(Map.of(
+            "ID", localId,
+            "businessPartnerID", matchingBpId,
+            "fullName", "ナビゲーションテスト用BP"
+        )));
+
+        try {
+            CqnStructuredTypeRef navRef = CQL.to(List.of(
+                CQL.refSegment(NAV_ENTITY, CQL.get("ID").eq(localId)),
+                CQL.refSegment("to_valueHelpMatch")
+            )).asRef();
+
+            CqnService service = businessPartnerService();
+            Result result = service.run(Select.from(navRef));
+
+            List<Row> rows = result.list();
+            assertThat(rows).as("親BPのbusinessPartnerIDに一致する1件だけ返る").hasSize(1);
+            assertThat(rows.get(0).get("BusinessPartner")).isEqualTo(matchingBpId);
+        } finally {
+            db.run(Delete.from(LOCAL_BP_ENTITY).where(b -> b.get("ID").eq(localId)));
+        }
     }
 }

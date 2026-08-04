@@ -13,7 +13,15 @@ service BusinessPartnerService @(path: '/api/business-partners') {
   // ----------------------------------------------------------
   // ローカルキャッシュエンティティ（読み書き可）
   // ----------------------------------------------------------
-  entity BusinessPartners as projection on db.BusinessPartners
+  entity BusinessPartners as projection on db.BusinessPartners {
+    *,
+    // 検証用: ナビゲーション経由でCustomerValueHelpへ READ した場合に、
+    // ref セグメント側のキー述語（親の ID）が正しく WHERE 条件へ変換されるかを確認するための関連。
+    // ローカルの主キーは UUID（ID）だが CustomerValueHelp のキーは S4 準拠の取引先ID文字列のため、
+    // ハンドラ側でローカル BP の businessPartnerID を解決してから S4 側の条件に変換する。
+    to_valueHelpMatch : Association to many CustomerValueHelp
+                           on to_valueHelpMatch.BusinessPartner = businessPartnerID
+  }
     actions {
       // S/4HANA から最新情報をフェッチしてキャッシュを更新する
       action syncFromS4() returns String;
