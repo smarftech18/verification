@@ -1,5 +1,7 @@
 package customer.verification.handler;
 
+import cds.gen.zc_salesdocument_service.ZcSalesdocumentService;
+
 import com.sap.cds.Result;
 import com.sap.cds.Row;
 import com.sap.cds.ql.Select;
@@ -9,7 +11,6 @@ import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
-import com.sap.cds.services.runtime.CdsRuntime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +50,14 @@ public class SalesMashupHandler implements EventHandler {
 
     private static final Logger log = LoggerFactory.getLogger(SalesMashupHandler.class);
 
-    private static final String S4_SERVICE_NAME = "ZC_SALESDOCUMENT_SERVICE";
-    private static final String S4_ENTITY       = "ZC_SALESDOCUMENT_SERVICE.ZcSalesDocument";
-    private static final String HEADER_ENTITY   = "com.example.bp.SalesDocHeader";
+    private static final String S4_ENTITY     = "ZC_SALESDOCUMENT_SERVICE.ZcSalesDocument";
+    private static final String HEADER_ENTITY = "com.example.bp.SalesDocHeader";
 
     @Autowired
     private PersistenceService db;
 
     @Autowired
-    private CdsRuntime runtime;
+    private ZcSalesdocumentService salesDocumentService;
 
     /**
      * SalesMashupList の READ ハンドラ。
@@ -72,14 +72,11 @@ public class SalesMashupHandler implements EventHandler {
         // ----------------------------------------------------------
         // Step1: S4 から ZcSalesDocument を取得
         //
-        // RemoteService として登録された ZC_SALESDOCUMENT_SERVICE を
-        // ランタイムから取得してクエリを実行する。
-        // 実環境では Destination サービス経由で S4 に HTTP リクエストが飛ぶ。
+        // external 配下の CDS を cds build した際に gen 配下へ生成される
+        // 型付きサービスインターフェース（ZcSalesdocumentService）を Autowired し、
+        // そのままクエリを実行する。実環境では Destination サービス経由で S4 に HTTP リクエストが飛ぶ。
         // ----------------------------------------------------------
-        CqnService s4Service = (CqnService) runtime.getServiceCatalog()
-                .getService(CqnService.class, S4_SERVICE_NAME);
-
-        Result s4Result = s4Service.run(Select.from(S4_ENTITY));
+        Result s4Result = salesDocumentService.run(Select.from(S4_ENTITY));
         List<Row> s4Rows = s4Result.list();
         log.info("S4 から {}件 取得", s4Rows.size());
 

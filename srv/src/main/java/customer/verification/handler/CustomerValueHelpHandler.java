@@ -1,5 +1,7 @@
 package customer.verification.handler;
 
+import cds.gen.api_business_partner.ApiBusinessPartner;
+
 import com.sap.cds.Result;
 import com.sap.cds.ql.CQL;
 import com.sap.cds.ql.cqn.CqnSelect;
@@ -12,7 +14,6 @@ import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
-import com.sap.cds.services.runtime.CdsRuntime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +44,10 @@ public class CustomerValueHelpHandler implements EventHandler {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerValueHelpHandler.class);
 
-    private static final String S4_SERVICE_NAME = "API_BUSINESS_PARTNER";
-    private static final String S4_ENTITY       = "API_BUSINESS_PARTNER.A_BusinessPartner";
+    private static final String S4_ENTITY = "API_BUSINESS_PARTNER.A_BusinessPartner";
 
     @Autowired
-    private CdsRuntime runtime;
+    private ApiBusinessPartner s4Service;
 
     @On(event = CqnService.EVENT_READ, entity = "BusinessPartnerService.CustomerValueHelp")
     public void onReadCustomerValueHelp(CdsReadEventContext ctx) {
@@ -69,9 +69,6 @@ public class CustomerValueHelpHandler implements EventHandler {
         };
 
         CqnSelect remoteQuery = CQL.copy(original, fromOnlyModifier);
-
-        CqnService s4Service = (CqnService) runtime.getServiceCatalog()
-            .getService(CqnService.class, S4_SERVICE_NAME);
 
         Result result = s4Service.run(remoteQuery);
         log.debug("CustomerValueHelp READ: {}件取得（top={}, skip={}）",
