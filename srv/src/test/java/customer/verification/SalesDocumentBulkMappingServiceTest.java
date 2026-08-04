@@ -93,7 +93,7 @@ class SalesDocumentBulkMappingServiceTest {
             .single();
         assertThat(header.get("CustomerName")).as("マスタ結合Viewから取得したCustomerNameが反映される")
             .isEqualTo("株式会社テック商事");
-        assertThat(header.get("CustomerGroup")).isEqualTo("01");
+        assertThat(header.get("CustomerGroup")).as("業務ルール: グループ01はVIPに読み替え").isEqualTo("VIP");
         assertThat(header.get("Status")).as("伝票種別ORなので初期ステータスは01").isEqualTo("01");
 
         Row item1 = db.run(
@@ -106,13 +106,44 @@ class SalesDocumentBulkMappingServiceTest {
         assertThat(item1.get("OrderQuantityUnit")).as("値加工: EA -> PC 変換").isEqualTo("PC");
     }
 
+    @Test
+    @DisplayName("マスタView該当なし（3-1がスキップされる想定）の場合でも例外を投げず、マスタ由来項目はnullで登録されること")
+    void createSalesDocuments_masterViewNotFound_doesNotThrow() {
+        String noMasterDoc = "8800000099";
+        // OrderHeader は投入しない = SalesDocItemView は該当なし(=master が null) になる
+        db.run(Insert.into(S4_ENTITY).entries(java.util.List.of(
+            zcRecordForDocument(noMasterDoc, ITEM_1, "001")
+        )));
+
+        try {
+            SalesDocumentBulkMappingService.BulkCreateResult result =
+                service.createSalesDocuments(noMasterDoc);
+
+            assertThat(result.headersCreated()).isEqualTo(1);
+
+            Row header = db.run(Select.from(HEADER_ENTITY).where(r -> r.get("SalesDocument").eq(noMasterDoc)))
+                .single();
+            assertThat(header.get("CustomerName")).as("マスタ未取得のためnull").isNull();
+            assertThat(header.get("CustomerGroup")).as("マスタ未取得のためnull").isNull();
+        } finally {
+            db.run(Delete.from(DETAIL_ENTITY).where(r -> r.get("SalesDocument").eq(noMasterDoc)));
+            db.run(Delete.from(ITEM_ENTITY).where(r -> r.get("SalesDocument").eq(noMasterDoc)));
+            db.run(Delete.from(HEADER_ENTITY).where(r -> r.get("SalesDocument").eq(noMasterDoc)));
+            db.run(Delete.from(S4_ENTITY).where(r -> r.get("SalesDocument").eq(noMasterDoc)));
+        }
+    }
+
     // ====================================================================
     // テストデータ構築ヘルパー
     // ====================================================================
 
     private Map<String, Object> zcRecord(String itemNumber, String seqNumber) {
+        return zcRecordForDocument(TEST_DOC, itemNumber, seqNumber);
+    }
+
+    private Map<String, Object> zcRecordForDocument(String document, String itemNumber, String seqNumber) {
         Map<String, Object> r = new LinkedHashMap<>();
-        r.put("SalesDocument", TEST_DOC);
+        r.put("SalesDocument", document);
         r.put("SalesDocumentItem", itemNumber);
         r.put("SequentialNumber", seqNumber);
         r.put("SalesOrganization", SALES_ORG);

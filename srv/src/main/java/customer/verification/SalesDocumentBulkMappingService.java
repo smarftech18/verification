@@ -21,6 +21,7 @@ import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -230,11 +231,19 @@ public class SalesDocumentBulkMappingService {
     }
 
     private String mapCustomerName(Row master) {
-        return master != null ? (String) master.get("CustomerName") : null;
+        return getString(master, "CustomerName").orElse(null);
     }
 
+    /**
+     * 得意先グループを取得する。特定グループ（"01"）は上位区分「VIP」に読み替える業務ルールを持つ。
+     *
+     * <p>{@link #getString} 経由でのみ {@code master} の値へアクセスするため、master が取得できない
+     * （3-1がスキップされた）レコードでも null は自動的に空扱いになり NPE が起きない。
+     * 取り出した後の固定値比較は {@link #equalsValue} に委ねる。
+     */
     private String mapCustomerGroup(Row master) {
-        return master != null ? (String) master.get("CustomerGroup") : null;
+        String group = getString(master, "CustomerGroup").orElse(null);
+        return equalsValue(group, "01") ? "VIP" : group;
     }
 
     /** S4の数量単位コードをローカル表記に変換する例。 */
@@ -249,25 +258,44 @@ public class SalesDocumentBulkMappingService {
     }
 
     private String mapMaterialName(Row master) {
-        return master != null ? (String) master.get("MaterialName") : null;
+        return getString(master, "MaterialName").orElse(null);
     }
 
     private String mapMaterialGroup(Row master) {
-        return master != null ? (String) master.get("MaterialGroup") : null;
+        return getString(master, "MaterialGroup").orElse(null);
     }
 
     private String mapPlantName(Row master) {
-        return master != null ? (String) master.get("PlantName") : null;
+        return getString(master, "PlantName").orElse(null);
     }
 
     private String mapCompanyCode(Row master) {
-        return master != null ? (String) master.get("CompanyCode") : null;
+        return getString(master, "CompanyCode").orElse(null);
     }
 
     /** 前後空白を除去する例（S4側でパディングされているケースを想定）。 */
     private String mapDetailText(Row rec) {
         String text = (String) rec.get("DetailText");
         return text != null ? text.trim() : "";
+    }
+
+    // ====================================================================
+    // null安全アクセス用の共通ユーティリティメソッド
+    //
+    // マスタの種類（View/テーブル）を問わず、Row を引数に取る共通メソッドとして提供する。
+    // 3-1 は設計上、該当データが無いレコードでは意図的にスキップされ得る
+    // （＝ row が null になるのが正しい状態）。値加工メソッド群はこれらのメソッド経由でのみ
+    // 値へアクセスし、row を直接 row.get(...) しないことで、null 未対応の分岐追加による
+    // NPE を構造的に防ぐ。
+    // ====================================================================
+
+    private static Optional<String> getString(Row row, String field) {
+        return row == null ? Optional.empty() : Optional.ofNullable((String) row.get(field));
+    }
+
+    /** null安全な文字列一致判定。actual が null の場合は常に false。 */
+    private static boolean equalsValue(String actual, String expected) {
+        return Optional.ofNullable(actual).map(expected::equals).orElse(false);
     }
 
     // ====================================================================
